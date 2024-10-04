@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PermisosController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\EmpleadoController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,23 +22,24 @@ Route::middleware([
 
 //////////////////////RUTAS DE USUARIOS//////////////////////
 
-// Rutas para roles
-/*Route::middleware(['auth', 'can:roles.ver'])->get('/roles', [RoleController::class, 'index'])->name('roles.index');
+// Rutas para roles /**/
+Route::middleware(['auth', 'can:roles.ver'])->get('/roles', [RoleController::class, 'index'])->name('roles.index');
 Route::middleware(['auth', 'can:roles.crear'])->get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-Route::middleware(['auth', 'can:roles.editar'])->get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-Route::middleware(['auth', 'can:roles.eliminar'])->delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
-Route::middleware(['auth', 'can:roles.asignar'])->post('/roles/{role}/assign', [RoleController::class, 'assign'])->name('roles.assign');
+Route::middleware(['auth', 'can:roles.editar'])->get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+Route::middleware(['auth', 'can:roles.eliminar'])->delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+Route::middleware(['auth', 'can:roles.asignar'])->post('/roles/{id}/assign', [RoleController::class, 'assign'])->name('roles.assign');
 
 // Rutas para permisos
-Route::middleware(['auth', 'can:permisos.ver'])->get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-Route::middleware(['auth', 'can:permisos.crear'])->get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
-Route::middleware(['auth', 'can:permisos.editar'])->get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
-Route::middleware(['auth', 'can:permisos.eliminar'])->delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
-Route::middleware(['auth', 'can:permisos.asignar'])->post('/permissions/{permission}/assign', [PermissionController::class, 'assign'])->name('permissions.assign');
-*/
+Route::middleware(['auth', 'can:permisos.ver'])->get('/permisos', [PermisosController::class, 'index'])->name('permisos.index');
+Route::middleware(['auth', 'can:permisos.crear'])->get('/permisos/create', [PermisosController::class, 'create'])->name('permisos.create');
+Route::middleware(['auth', 'can:permisos.editar'])->get('/permisos/{id}/edit', [PermisosController::class, 'edit'])->name('permisos.edit');
+Route::middleware(['auth', 'can:permisos.eliminar'])->delete('/permisos/{id}', [PermisosController::class, 'destroy'])->name('permisos.destroy');
+Route::middleware(['auth', 'can:permisos.asignar'])->post('/permisos/{id}/assign', [PermisosController::class, 'assign'])->name('permisos.assign');
+
 // Rutas para empleados
 Route::middleware(['auth', 'can:empleados.ver'])->get('/empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
 Route::middleware(['auth', 'can:empleados.crear'])->get('/empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
-Route::middleware(['auth', 'can:empleados.editar'])->get('/empleados/{employee}/edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
-Route::middleware(['auth', 'can:empleados.eliminar'])->delete('/empleados/{employee}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
-Route::middleware(['auth', 'can:empleados.asignar'])->post('/empleados/{employee}/assign', [EmpleadoController::class, 'assign'])->name('empleados.assign');
+Route::middleware(['auth', 'can:empleados.editar'])->get('/empleados/{id}/edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
+Route::middleware(['auth', 'can:empleados.eliminar'])->delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
+Route::middleware(['auth', 'can:empleados.asignar'])->post('/empleados/{id}/assign', [EmpleadoController::class, 'assign'])->name('empleados.assign');
+
