@@ -8,5 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Platillo extends Model
 {
     use HasFactory;
+<<<<<<< HEAD
     public $timestamps = false;
+=======
+
+    // Permitir estos campos para la asignación masiva
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'imagen', // Agregar el campo de la imagen
+        'categoria',
+        'sucursal_id',
+    ];
+
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursales::class, 'sucursal_id');
+    }
+>>>>>>> ada34264308251eafa6a66f11848a49e2cd3a0f0
 }
