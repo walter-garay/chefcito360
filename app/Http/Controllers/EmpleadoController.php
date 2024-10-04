@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PProveedores;
 use Illuminate\Http\Request;
 
-class PProveedoresController extends Controller
+class EmpleadoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +33,7 @@ class PProveedoresController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PProveedores $pProveedores)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +41,7 @@ class PProveedoresController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PProveedores $pProveedores)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +49,7 @@ class PProveedoresController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PProveedores $pProveedores)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +57,7 @@ class PProveedoresController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PProveedores $pProveedores)
+    public function destroy(string $id)
     {
         //
     }
