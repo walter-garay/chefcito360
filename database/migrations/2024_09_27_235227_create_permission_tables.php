@@ -1,4 +1,4 @@
-<?php
+php artisan make:seeder PermissionsTableSeederphp artisan make:seeder PermissionsTableSeeder<?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
