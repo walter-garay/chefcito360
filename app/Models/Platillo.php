@@ -9,6 +9,8 @@ class Platillo extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     // Permitir estos campos para la asignación masiva
     protected $fillable = [
         'nombre',
