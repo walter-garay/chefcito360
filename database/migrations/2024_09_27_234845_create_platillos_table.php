@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->decimal('precio', 4,2);
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
             $table->enum('categoria', ['entrada','principal','postre','bebida']);
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
