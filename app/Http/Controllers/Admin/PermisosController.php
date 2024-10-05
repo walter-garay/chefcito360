@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Mesa;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MesaController extends Controller
+class PermisosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,6 @@ class MesaController extends Controller
     public function index()
     {
         //
-        return view('mesas.index');
     }
 
     /**
@@ -35,7 +34,7 @@ class MesaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Mesa $mesa)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +42,7 @@ class MesaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Mesa $mesa)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +50,7 @@ class MesaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Mesa $mesa)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +58,7 @@ class MesaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mesa $mesa)
+    public function destroy(string $id)
     {
         //
     }
