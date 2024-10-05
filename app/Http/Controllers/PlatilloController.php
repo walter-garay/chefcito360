@@ -16,6 +16,9 @@ class PlatilloController extends Controller
     {
         // Obtener todos los platillos con su relación sucursal
         $platillos = Platillo::with('sucursal')->get();
+
+       /*OBTENER PLATILLO CON LA SUCURSAL CORRECTA---REVISAAAAAR*/
+       
         $sucursales = Sucursales::all(); // Asegúrate de obtener todas las sucursales
 
         // Pasar los datos a la vista

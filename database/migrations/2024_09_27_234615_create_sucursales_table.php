@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->integer('whatsapp')->nullable();
             $table->string('serie');
+            $table->tinyInteger('suc_estado')->unsigned()->default(1);
             $table->unsignedBigInteger('gerente_id');
             $table->foreign('gerente_id')->references('id')->on('users');
             $table->timestamps();

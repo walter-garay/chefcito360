@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('direccion')->nullable();
             $table->integer('celular');
             $table->string('correo')->nullable();
+            $table->tinyInteger('prov_estado')->unsigned()->default(1);
             $table->timestamps();
         });
     }

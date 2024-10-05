@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('correlativo');
             $table->decimal('total', 4,2);
+            $table->tinyInteger('vent_estado')->unsigned()->default(1);
             $table->unsignedBigInteger('cajero_id');
             $table->foreign('cajero_id')->references('id')->on('users');
             $table->unsignedBigInteger('sucursal_id');

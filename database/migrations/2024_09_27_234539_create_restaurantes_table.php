@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('nombre_twitter')->nullable();
             $table->string('nombre_youtube')->nullable();
             $table->string('nombre_tiktok')->nullable();
+            $table->tinyInteger('res_estado')->unsigned()->default(1);
             $table->timestamps();
         });
     }
