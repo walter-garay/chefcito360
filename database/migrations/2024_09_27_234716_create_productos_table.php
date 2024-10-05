@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('descripcion')->nullable();
             $table->decimal('precio_c', 4,2);
             $table->decimal('precio_v', 4,2);
+            $table->tinyInteger('prod_estado')->unsigned()->default(1);
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->unsignedBigInteger('cocinero_id');

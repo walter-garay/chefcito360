@@ -4,10 +4,10 @@ namespace App\Livewire\Sucursales;
 
 use Livewire\Component;
 
-class Sucursal extends Component
+class EliminarSucursal extends Component
 {
     public function render()
     {
-        return view('livewire.sucursales.sucursal');
+        return view('livewire.sucursales.eliminar-sucursal');
     }
 }

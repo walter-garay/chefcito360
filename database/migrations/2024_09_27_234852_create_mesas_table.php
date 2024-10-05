@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('mesas', function (Blueprint $table) {
             $table->id();
             $table->string('numero');
+            $table->tinyInteger('mesas_estado')->unsigned()->default(1);
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->timestamps();

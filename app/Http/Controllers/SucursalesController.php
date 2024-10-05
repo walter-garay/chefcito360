@@ -12,13 +12,12 @@ class SucursalesController extends Controller
      */
     public function index()
     {
-        //
         return view('sucursales.index');
     }
 
-    /**
+    /*
      * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         //
@@ -26,7 +25,7 @@ class SucursalesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
+     
     public function store(Request $request)
     {
         //
@@ -34,7 +33,7 @@ class SucursalesController extends Controller
 
     /**
      * Display the specified resource.
-     */
+     
     public function show(Sucursales $sucursales)
     {
         //
@@ -42,7 +41,7 @@ class SucursalesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */
+     
     public function edit(Sucursales $sucursales)
     {
         //
@@ -50,7 +49,7 @@ class SucursalesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
+     
     public function update(Request $request, Sucursales $sucursales)
     {
         //
@@ -58,9 +57,9 @@ class SucursalesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     */
+     
     public function destroy(Sucursales $sucursales)
     {
         //
-    }
+    } */
 }
