@@ -3,8 +3,14 @@
 use App\Http\Controllers\Admin\PermisosController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\MesaController;
+use App\Http\Controllers\OrdenesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlatilloController;
+use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ProveedoresController;
+use App\Http\Controllers\SucursalesController;
+use App\Http\Controllers\VentasController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,12 +30,8 @@ Route::middleware([
 
 //////////////////////RUTAS DE USUARIOS//////////////////////
 
-// Rutas para roles /**/
-Route::middleware(['auth', 'can:roles.ver'])->get('/roles', [RoleController::class, 'index'])->name('roles.index');
-Route::middleware(['auth', 'can:roles.crear'])->get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-Route::middleware(['auth', 'can:roles.editar'])->get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-Route::middleware(['auth', 'can:roles.eliminar'])->delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
-Route::middleware(['auth', 'can:roles.asignar'])->post('/roles/{id}/assign', [RoleController::class, 'assign'])->name('roles.assign');
+// Rutas para roles
+Route::resource('roles', RoleController::class)->middleware(['auth', 'can:Roles'])->names('roles');
 
 // Rutas para permisos
 Route::middleware(['auth', 'can:permisos.ver'])->get('/permisos', [PermisosController::class, 'index'])->name('permisos.index');
