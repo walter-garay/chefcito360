@@ -4,6 +4,7 @@ namespace App\Livewire\Sucursales;
 
 use App\Models\Sucursales;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class CrearSucursal extends Component
 {
@@ -24,7 +25,6 @@ class CrearSucursal extends Component
         'direccion' => ['required','string','max:250'],
         'whatsapp' => ['required','string','max:9'],
         'serie' => ['required','string','max:5'],
-        'gerente_id' => ['required'],
     ];
     public function abrirModal()
     {
@@ -42,11 +42,11 @@ class CrearSucursal extends Component
         $sucursal->direccion = $this->direccion;
         $sucursal->whatsapp = $this->whatsapp;
         $sucursal->serie = $this->serie;
-        $sucursal->gerente_id = $this->gerente_id;
+        $sucursal->gerente_id = Auth::id();
         $sucursal->save();
 
         $this->dispatch('guardado');
-        
+        $this->cerrarModal();
 
     }
     public function cerrarModal()
