@@ -13,6 +13,7 @@ class OrdenesController extends Controller
     public function index()
     {
         //
+        return view('ordenes.index');
     }
 
     /**
