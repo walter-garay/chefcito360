@@ -3,8 +3,14 @@
 use App\Http\Controllers\Admin\PermisosController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\MesaController;
+use App\Http\Controllers\OrdenesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlatilloController;
+use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ProveedoresController;
+use App\Http\Controllers\SucursalesController;
+use App\Http\Controllers\VentasController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,31 +26,24 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    // Rutas para la gestión de platillos
-    Route::resource('platillos', PlatilloController::class);
 });
 
 
 //////////////////////RUTAS DE USUARIOS//////////////////////
 
-// Rutas para roles /**/
-Route::middleware(['auth', 'can:roles.ver'])->get('/roles', [RoleController::class, 'index'])->name('roles.index');
-Route::middleware(['auth', 'can:roles.crear'])->get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-Route::middleware(['auth', 'can:roles.editar'])->get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-Route::middleware(['auth', 'can:roles.eliminar'])->delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
-Route::middleware(['auth', 'can:roles.asignar'])->post('/roles/{id}/assign', [RoleController::class, 'assign'])->name('roles.assign');
+// Rutas para roles
+Route::resource('roles', RoleController::class)->middleware(['auth', 'can:Roles'])->names('roles');
 
 // Rutas para permisos
-Route::middleware(['auth', 'can:permisos.ver'])->get('/permisos', [PermisosController::class, 'index'])->name('permisos.index');
-Route::middleware(['auth', 'can:permisos.crear'])->get('/permisos/create', [PermisosController::class, 'create'])->name('permisos.create');
-Route::middleware(['auth', 'can:permisos.editar'])->get('/permisos/{id}/edit', [PermisosController::class, 'edit'])->name('permisos.edit');
-Route::middleware(['auth', 'can:permisos.eliminar'])->delete('/permisos/{id}', [PermisosController::class, 'destroy'])->name('permisos.destroy');
-Route::middleware(['auth', 'can:permisos.asignar'])->post('/permisos/{id}/assign', [PermisosController::class, 'assign'])->name('permisos.assign');
+Route::resource('permisos', PermisosController::class)->middleware(['auth', 'can:Ver Permisos', 'can:Asignar Permisos'])->names('permisos');
 
-// Rutas para empleados
-Route::middleware(['auth', 'can:empleados.ver'])->get('/empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
-Route::middleware(['auth', 'can:empleados.crear'])->get('/empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
-Route::middleware(['auth', 'can:empleados.editar'])->get('/empleados/{id}/edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
-Route::middleware(['auth', 'can:empleados.eliminar'])->delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
-Route::middleware(['auth', 'can:empleados.asignar'])->post('/empleados/{id}/assign', [EmpleadoController::class, 'assign'])->name('empleados.assign');
+// Rutas para empleados Route::resource('empleados', EmpleadoController::class)->middleware(['auth'])->names('empleados');
 
+// Rutas para la gestión de platillos
+Route::resource('platillos', PlatilloController::class)->middleware(['auth'])->names('platillos');
+Route::resource('proveedores', ProveedoresController::class)->middleware(['auth','can:proveedores.ver'])->names('proveedores');
+Route::resource('productos', ProductosController::class)->middleware(['auth','can:productos.ver'])->names('productos');
+Route::resource('sucursales', SucursalesController::class)->middleware(['auth','can:sucursales.ver'])->names('sucursales');
+Route::resource('mesas', MesaController::class)->middleware(['auth','can:mesas.ver'])->names('mesas');
+Route::resource('ventas', VentasController::class)->middleware(['auth','can:ventas.ver'])->names('ventas');
+Route::resource('ordenes', OrdenesController::class)->middleware(['auth','can:ordenes.ver'])->names('ordenes');

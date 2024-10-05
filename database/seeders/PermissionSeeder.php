@@ -22,52 +22,39 @@ class PermissionSeeder extends Seeder
         $cosinero = Role::create(['name' => 'COSINERO']);
 
 
-        Permission::create(['name' => 'roles.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'roles.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'roles.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'roles.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'roles.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Roles'])->syncRoles($admin);
 
-        Permission::create(['name' => 'permisos.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'permisos.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'permisos.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'permisos.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'permisos.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Ver Permisos'])->syncRoles($admin);
+        Permission::create(['name' => 'Asignar Permisos'])->syncRoles($admin);
 
-        Permission::create(['name' => 'empleados.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'empleados.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'empleados.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'empleados.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'empleados.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Empleados ver'])->syncRoles($admin);
+        Permission::create(['name' => 'Empleados crear'])->syncRoles($admin);
+        Permission::create(['name' => 'Empleados editar'])->syncRoles($admin);
+        Permission::create(['name' => 'Empleados eliminar'])->syncRoles($admin);
 
-        Permission::create(['name' => 'sucursales.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'sucursales.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'sucursales.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'sucursales.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'sucursales.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Sucursales ver'])->syncRoles($admin);
+        Permission::create(['name' => 'Sucursales crear'])->syncRoles($admin);
+        Permission::create(['name' => 'Sucursales editar'])->syncRoles($admin);
+        Permission::create(['name' => 'Sucursales eliminar'])->syncRoles($admin);
 
-        Permission::create(['name' => 'platillos.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'platillos.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'platillos.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'platillos.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'platillos.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Platillos ver'])->syncRoles($admin);
+        Permission::create(['name' => 'Platillos crear'])->syncRoles($admin);
+        Permission::create(['name' => 'Platillos editar'])->syncRoles($admin);
+        Permission::create(['name' => 'Platillos eliminar'])->syncRoles($admin);
 
-        Permission::create(['name' => 'proveedores.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'proveedores.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'proveedores.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'proveedores.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'proveedores.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Proveedores ver'])->syncRoles($admin);
+        Permission::create(['name' => 'Proveedores crear'])->syncRoles($admin);
+        Permission::create(['name' => 'Proveedores editar'])->syncRoles($admin);
+        Permission::create(['name' => 'Proveedores eliminar'])->syncRoles($admin);
 
-        Permission::create(['name' => 'inventario.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'inventario.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'inventario.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'inventario.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'inventario.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Inventario ver'])->syncRoles($admin);
+        Permission::create(['name' => 'Inventario crear'])->syncRoles($admin);
+        Permission::create(['name' => 'Inventario editar'])->syncRoles($admin);
+        Permission::create(['name' => 'Inventario eliminar'])->syncRoles($admin);
 
-        Permission::create(['name' => 'mesas.ver'])->syncRoles($admin);
-        Permission::create(['name' => 'mesas.crear'])->syncRoles($admin);
-        Permission::create(['name' => 'mesas.editar'])->syncRoles($admin);
-        Permission::create(['name' => 'mesas.eliminar'])->syncRoles($admin);
-        Permission::create(['name' => 'mesas.asignar'])->syncRoles($admin);
+        Permission::create(['name' => 'Mesas ver'])->syncRoles($admin);
+        Permission::create(['name' => 'Mesas crear'])->syncRoles($admin);
+        Permission::create(['name' => 'Mesas editar'])->syncRoles($admin);
+        Permission::create(['name' => 'Mesas eliminar'])->syncRoles($admin);
     }
 }
