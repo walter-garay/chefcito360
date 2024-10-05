@@ -41,9 +41,9 @@ Route::resource('permisos', PermisosController::class)->middleware(['auth', 'can
 
 // Rutas para la gestión de platillos
 Route::resource('platillos', PlatilloController::class)->middleware(['auth'])->names('platillos');
-Route::resource('proveedores', ProveedoresController::class)->middleware(['auth','can:proveedores.ver'])->names('proveedores');
-Route::resource('productos', ProductosController::class)->middleware(['auth','can:productos.ver'])->names('productos');
-Route::resource('sucursales', SucursalesController::class)->middleware(['auth','can:sucursales.ver'])->names('sucursales');
-Route::resource('mesas', MesaController::class)->middleware(['auth','can:mesas.ver'])->names('mesas');
-Route::resource('ventas', VentasController::class)->middleware(['auth','can:ventas.ver'])->names('ventas');
-Route::resource('ordenes', OrdenesController::class)->middleware(['auth','can:ordenes.ver'])->names('ordenes');
+Route::resource('proveedores', ProveedoresController::class)->middleware(['auth'])->names('proveedores');
+Route::resource('productos', ProductosController::class)->middleware(['auth'])->names('productos');
+Route::resource('sucursales', SucursalesController::class)->middleware(['auth'])->names('sucursales');
+Route::resource('mesas', MesaController::class)->middleware(['auth'])->names('mesas');
+Route::resource('ventas', VentasController::class)->middleware(['auth'])->names('ventas');
+Route::resource('ordenes', OrdenesController::class)->middleware(['auth'])->names('ordenes');
