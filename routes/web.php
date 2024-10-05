@@ -18,9 +18,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    // Rutas para la gestión de platillos
-    Route::resource('platillos', PlatilloController::class);
-});
 
 
 //////////////////////RUTAS DE USUARIOS//////////////////////
@@ -45,3 +42,7 @@ Route::middleware(['auth', 'can:empleados.crear'])->get('/empleados/create', [Em
 Route::middleware(['auth', 'can:empleados.editar'])->get('/empleados/{employee}/edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
 Route::middleware(['auth', 'can:empleados.eliminar'])->delete('/empleados/{employee}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
 Route::middleware(['auth', 'can:empleados.asignar'])->post('/empleados/{employee}/assign', [EmpleadoController::class, 'assign'])->name('empleados.assign');
+
+Route::resource('platillos', PlatilloController::class);
+
+});
