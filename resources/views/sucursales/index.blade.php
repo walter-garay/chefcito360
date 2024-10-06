@@ -14,5 +14,6 @@
             </div>
         </div>
     </div>
-    
+    @livewire('sucursales.editar-sucursal')
+    @livewire('sucursales.eliminar-sucursal')
 </x-app-layout>

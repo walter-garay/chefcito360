@@ -20,14 +20,14 @@
                         <x-label for="tipo_sucursal" value="Tipo de Sucursal" class="mb-2" />
                         <x-select wire:model="tipo_sucursal" class="w-full">
                             <option value="">Seleccione...</option>
-                            <option value="Central">Sucursal Central</option>
-                            <option value="Secundaria">Sucursal Secundaria</option>
+                            <option value="central">central</option>
+                            <option value="secundaria">secundaria</option>
                         </x-select>
                         <x-input-error for="tipo_sucursal" class="mt-2" />
                     </div>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
                         <div class="sm:w-1/2">
-                            <x-label for="celular" value="Telefono" />
+                            <x-label for="celular" value="Teléfono" />
                             <x-input id="celular" wire:model="celular" type="text" class="block mt-1 w-full" />
                             <x-input-error for="celular" class="mt-2" />
                         </div>

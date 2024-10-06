@@ -21,9 +21,9 @@ class CrearSucursal extends Component
     protected $rules = [
         'nombre' => ['required','string','max:250'],
         'tipo_sucursal' => ['required'],
-        'celular' => ['required','string','max:7'],
+        'celular' => ['required','max:7'],
         'direccion' => ['required','string','max:250'],
-        'whatsapp' => ['required','string','max:9'],
+        'whatsapp' => ['required','max:9'],
         'serie' => ['required','string','max:5'],
     ];
     public function abrirModal()
