@@ -5,23 +5,38 @@ namespace App\Livewire\Sucursales;
 use Livewire\Component;
 use App\Models\Sucursales;
 
+
+
 class ListarSucursal extends Component
 {
-    protected $listeners = ['guardado'=>'getSucursales'];
+   
+    public $sucursales;
+
+    protected $listeners = [
+        'guardado'=>'getSucursales',
+        'sucursalActualizado'=>'getSucursales',
+        'eliminado'=>'getSucursales'];
 
     public function mount()
     {
-        return $this->getSucursales();
+        $this->getSucursales();
     }
     public function getSucursales()
     {
-       $sucursales = Sucursales::where('suc_estado',1)->orderBy('id','desc')->paginate(10);
-       return $sucursales??[];
+       $this->sucursales =Sucursales::where('suc_estado',1)->get();
+    }
+    public function eliminar($id)
+    {
+        $this->dispatch('eliminar',$id);
     }
     
+    public function editar($id)
+    {
+        $this->dispatch('editar',$id);
+    }
     public function render()
     {
         return view('livewire.sucursales.listar-sucursal',[
-            'sucursales'=>$this->getSucursales()]);
+            'sucursales'=>$this->sucursales]);
     }
 }
