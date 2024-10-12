@@ -48,5 +48,11 @@ Route::middleware(['auth', 'can:empleados.eliminar'])->delete('/empleados/{emplo
 Route::middleware(['auth', 'can:empleados.asignar'])->post('/empleados/{employee}/assign', [EmpleadoController::class, 'assign'])->name('empleados.assign');
 
 Route::resource('platillos', PlatilloController::class);
+Route::resource('proveedores', controller: ProveedoresController::class);
+Route::resource('productos', controller: ProductosController::class);
+Route::resource('sucursales', controller: SucursalesController::class);
+Route::resource('mesas', controller: MesaController::class);
+Route::resource('ordenes', controller: OrdenesController::class);
+Route::resource('ventas', controller: VentasController::class);
 
 });
