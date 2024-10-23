@@ -1,24 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\PermisosController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\OrdenesController;
 use App\Http\Controllers\Admin\PermisosController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\EmpleadoController;
-use App\Http\Controllers\MesaController;
-use App\Http\Controllers\OrdenesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlatilloController;
 use App\Http\Controllers\ProductosController;
-use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\SucursalesController;
-use App\Http\Controllers\VentasController;
-use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ProveedoresController;
-use App\Http\Controllers\SucursalesController;
 use App\Http\Controllers\VentasController;
 
 Route::get('/', function () {
@@ -46,7 +37,8 @@ Route::resource('roles', RoleController::class)->middleware(['auth', 'can:Roles'
 // Rutas para permisos
 Route::resource('permisos', PermisosController::class)->middleware(['auth', 'can:Ver Permisos', 'can:Asignar Permisos'])->names('permisos');
 
-// Rutas para empleados Route::resource('empleados', EmpleadoController::class)->middleware(['auth'])->names('empleados');
+// Rutas para empleados 
+Route::resource('empleados', EmpleadoController::class)->middleware(['auth'])->names('empleados');
 
 // Rutas para la gestión de platillos
 Route::resource('platillos', PlatilloController::class)->middleware(['auth'])->names('platillos');
