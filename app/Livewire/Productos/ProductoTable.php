@@ -1,27 +1,29 @@
 <?php
 
-namespace App\Livewire\Platillos;
+namespace App\Livewire\Productos;
 
+use App\Models\Productos;
+use App\Models\Sucursales;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\Platillo;
-use App\Models\Sucursales;
 
-class PlatilloTable extends Component
+class ProductoTable extends Component
 {
     use WithFileUploads;
 
-    public $platillos, $nombre, $descripcion, $precio, $categoria, $sucursal_id, $imagen, $imagenActual;
+    public $producto_id, $productos, $nombre, $descripcion, $precio_c, $precio_v, $stock, $categoria, $sucursal_id, $imagen, $imagenActual;
     public $isEditing = false;
     public $showModal = false;
     public $showConfirmModal = false;
     public $sucursales;
-    public $platilloIdToDelete;
+    public $productoIdToDelete;
 
     protected $rules = [
         'nombre' => 'required|string|max:255',
-        'descripcion' => 'required|string|max:500',
-        'precio' => 'required|numeric',
+        'descripcion' => 'nullable|string|max:500',
+        'precio_c' => 'nullable|numeric',
+        'precio_v' => 'nullable|numeric',
+        'stock' => 'required|integer|min:0',
         'categoria' => 'required|string',
         'sucursal_id' => 'required|exists:sucursales,id',
         'imagen' => 'nullable|image|max:1024',
@@ -29,7 +31,7 @@ class PlatilloTable extends Component
 
     public function mount()
     {
-        $this->platillos = Platillo::all();
+        $this->productos = Productos::all();
         $this->sucursales = Sucursales::all();
     }
 
@@ -40,68 +42,74 @@ class PlatilloTable extends Component
         $this->isEditing = false;
     }
 
-    public function editPlatillo($id)
+    public function editProducto($id)
     {
-        $platillo = Platillo::findOrFail($id);
-        $this->fill($platillo->toArray());
-        $this->imagenActual = $platillo->imagen;
+        $producto = Productos::findOrFail($id);
+        $this->producto_id = $producto->id;
+        $this->fill($producto->toArray());
+        $this->imagenActual = $producto->imagen;
         $this->isEditing = true;
         $this->showModal = true;
     }
 
     public function confirmDelete($id)
     {
-        $this->platilloIdToDelete = $id;
+        $this->productoIdToDelete = $id;
         $this->showConfirmModal = true;
     }
 
     public function deleteConfirmed()
     {
-        Platillo::findOrFail($this->platilloIdToDelete)->delete();
+        Productos::findOrFail($this->productoIdToDelete)->delete();
         $this->showConfirmModal = false;
-        $this->platillos = Platillo::all();  // Solo recargamos los platillos
-        session()->flash('message', 'Platillo eliminado con éxito.');
+        $this->productos = Productos::all();  // Recargar los productos
+        session()->flash('message', 'Producto eliminado con éxito.');
     }
 
     public function store()
     {
         $this->validate();
-        $imagenPath = $this->imagen ? $this->imagen->store('platillos', 'public') : null;
+        $imagenPath = $this->imagen ? $this->imagen->store('productos', 'public') : null;
 
-        Platillo::create([
+        Productos::create([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
-            'precio' => $this->precio,
+            'precio_c' => $this->precio_c,
+            'precio_v' => $this->precio_v,
+            'stock' => $this->stock,
             'categoria' => $this->categoria,
             'sucursal_id' => $this->sucursal_id,
             'imagen' => $imagenPath,
         ]);
 
-        session()->flash('message', 'Platillo creado con éxito.');
+        session()->flash('message', 'Producto creado con éxito.');
         $this->closeModal();
-        $this->platillos = Platillo::all();
+        $this->productos = Productos::all();
     }
 
     public function update()
     {
         $this->validate();
 
-        $platillo = Platillo::findOrFail($this->id);
-        $imagenPath = $this->imagen ? $this->imagen->store('platillos', 'public') : $this->imagenActual;
+        $producto = Productos::findOrFail($this->producto_id);
+        $imagenPath = $this->imagen ? $this->imagen->store('productos', 'public') : $this->imagenActual;
 
-        $platillo->update([
+        $producto->update([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
-            'precio' => $this->precio,
+            'precio_c' => $this->precio_c,
+            'precio_v' => $this->precio_v,
+            'stock' => $this->stock,
             'categoria' => $this->categoria,
             'sucursal_id' => $this->sucursal_id,
             'imagen' => $imagenPath,
         ]);
 
-        session()->flash('message', 'Platillo actualizado con éxito.');
+        session()->flash('message', 'Producto actualizado con éxito.');
         $this->closeModal();
-        $this->platillos = Platillo::all();
+        $this->productos = Productos::all();
     }
+
 
     public function closeModal()
     {
@@ -113,7 +121,9 @@ class PlatilloTable extends Component
     {
         $this->nombre = '';
         $this->descripcion = '';
-        $this->precio = '';
+        $this->precio_c = '';
+        $this->precio_v = '';
+        $this->stock = '';
         $this->categoria = '';
         $this->sucursal_id = '';
         $this->imagen = null;
@@ -122,6 +132,6 @@ class PlatilloTable extends Component
 
     public function render()
     {
-        return view('livewire.platillos.platillo-table');
+        return view('livewire.productos.producto-table');
     }
 }

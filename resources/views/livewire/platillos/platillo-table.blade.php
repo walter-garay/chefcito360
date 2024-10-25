@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
         @if (session()->has('message'))
             <div class="mb-4 text-green-600">
@@ -8,7 +8,7 @@
 
         <div class="flex justify-between items-center mb-4">
             <!-- Botón para abrir el modal de agregar platillo -->
-            <x-button wire:click="openModal">
+            <x-button wire:click="openModal" class="mr-2 bg-blue-600 hover:bg-blue-700">
                 Agregar Platillo
             </x-button>
         </div>
@@ -18,7 +18,8 @@
             <table class="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
-                        <th class="px-6 py-3">ID</th>
+                        <th class="px-6 py-3">#</th>
+                        <th class="px-6 py-3">Foto</th> <!-- Nueva columna -->
                         <th class="px-6 py-3">Nombre</th>
                         <th class="px-6 py-3">Descripción</th>
                         <th class="px-6 py-3">Precio</th>
@@ -31,6 +32,13 @@
                     @foreach ($platillos as $platillo)
                         <tr>
                             <td class="px-6 py-4">{{ $platillo->id }}</td>
+                            <td class="px-6 py-4">
+                                @if ($platillo->imagen)
+                                    <img src="{{ asset('storage/' . $platillo->imagen) }}" alt="Foto del platillo" class="w-16 h-16 rounded">
+                                @else
+                                    <span>No hay imagen</span>
+                                @endif
+                            </td>
                             <td class="px-6 py-4">{{ $platillo->nombre }}</td>
                             <td class="px-6 py-4">{{ $platillo->descripcion }}</td>
                             <td class="px-6 py-4">S/. {{ number_format($platillo->precio, 2) }}</td>
@@ -38,14 +46,14 @@
                             <td class="px-6 py-4">{{ $platillo->sucursal->nombre }}</td>
                             <td class="px-6 py-4">
                                 <!-- Botón Editar -->
-                                <x-button wire:click="editPlatillo({{ $platillo->id }})" class="mr-2 bg-blue-500 hover:bg-blue-600">
+                                <x-button wire:click="editPlatillo({{ $platillo->id }})">
                                     Editar
                                 </x-button>
 
                                 <!-- Botón Eliminar -->
-                                <x-button wire:click="deletePlatillo({{ $platillo->id }})" class="bg-red-500 hover:bg-red-600">
+                                <x-danger-button wire:click="confirmDelete({{ $platillo->id }})">
                                     Eliminar
-                                </x-button>
+                                </x-danger-button>
                             </td>
                         </tr>
                     @endforeach
@@ -78,34 +86,37 @@
                 <x-input id="precio" type="number" step="0.01" wire:model="precio" class="mt-1 block w-full" />
                 <x-input-error for="precio" />
 
+                <!-- Foto -->
+                <x-label for="imagen" value="Foto del Platillo" class="mt-4" />
+                <input type="file" wire:model="imagen" id="imagen" class="mt-1 block w-full">
+                <x-input-error for="imagen" />
+                @if ($imagen)
+                    <img src="{{ $imagen->temporaryUrl() }}" alt="Vista previa" class="mt-2 w-16 h-16 rounded">
+                @elseif ($isEditing && $imagenActual)
+                    <img src="{{ asset('storage/' . $imagenActual) }}" alt="Imagen actual" class="mt-2 w-16 h-16 rounded">
+                @endif
+
                 <!-- Categoría usando dropdown -->
                 <x-label for="categoria" value="Categoría" class="mt-4" />
-                <x-dropdown width="48" wire:model="categoria" dropdownClasses="mt-2">
+                <x-dropdown width="full" wire:model="categoria" dropdownClasses="mt-2">
                     <x-slot name="trigger">
                         <x-input id="categoria_input" type="text" wire:model="categoria" readonly class="cursor-pointer mt-1 block w-full" placeholder="Seleccione una categoría" />
                     </x-slot>
                     <x-slot name="content">
-                        <x-dropdown-link wire:click="$set('categoria', 'entrada')">
-                            Entrada
-                        </x-dropdown-link>
-                        <x-dropdown-link wire:click="$set('categoria', 'principal')">
-                            Principal
-                        </x-dropdown-link>
-                        <x-dropdown-link wire:click="$set('categoria', 'postre')">
-                            Postre
-                        </x-dropdown-link>
-                        <x-dropdown-link wire:click="$set('categoria', 'bebida')">
-                            Bebida
-                        </x-dropdown-link>
+                        <x-dropdown-link wire:click="$set('categoria', 'principal')">Principal</x-dropdown-link>
+                        <x-dropdown-link wire:click="$set('categoria', 'entrada')">Entrada</x-dropdown-link>
+                        <x-dropdown-link wire:click="$set('categoria', 'postre')">Postre</x-dropdown-link>
+                        <x-dropdown-link wire:click="$set('categoria', 'bebida')">Bebida</x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
                 <x-input-error for="categoria" />
 
                 <!-- Sucursal usando dropdown -->
                 <x-label for="sucursal_id" value="Sucursal" class="mt-4" />
-                <x-dropdown width="48" wire:model="sucursal_id" dropdownClasses="mt-2">
+                <x-dropdown width="full" wire:model.defer="sucursal_id" dropdownClasses="mt-2">
                     <x-slot name="trigger">
-                        <x-input id="sucursal_input" type="text" wire:model="sucursal_id" readonly class="cursor-pointer mt-1 block w-full" placeholder="Seleccione una sucursal" />
+                        <!-- Aquí mostramos el nombre de la sucursal seleccionada -->
+                        <x-input id="sucursal_input" type="text" value="{{ $sucursales->find($sucursal_id)->nombre ?? 'Seleccione una sucursal' }}" readonly class="cursor-pointer mt-1 block w-full" />
                     </x-slot>
                     <x-slot name="content">
                         @foreach ($sucursales as $sucursal)
@@ -129,4 +140,26 @@
             </x-button>
         </x-slot>
     </x-dialog-modal>
+
+    <x-confirmation-modal wire:model="showConfirmModal">
+        <x-slot name="title">
+            ¿Estás seguro de esta acción?
+        </x-slot>
+
+        <x-slot name="content">
+            El platillo será eliminado permanentemente.
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('showConfirmModal')">
+                Cancelar
+            </x-secondary-button>
+
+            <x-danger-button wire:click="deleteConfirmed" class="ml-2">
+                Eliminar
+            </x-danger-button>
+        </x-slot>
+    </x-confirmation-modal>
+
+
 </div>

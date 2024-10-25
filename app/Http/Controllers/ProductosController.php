@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Productos;
 use Illuminate\Http\Request;
+use App\Models\Sucursales;
 
 class ProductosController extends Controller
 {
@@ -12,8 +13,13 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        //
-        return view('productos.index');
+        // Obtener todos los productos con su relación sucursal
+        $productos = Productos::with('sucursal')->get();
+
+        $sucursales = Sucursales::all(); // Obtener todas las sucursales
+
+        // Pasar los datos a la vista
+        return view('productos.index', compact('productos', 'sucursales'));
     }
 
     /**

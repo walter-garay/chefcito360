@@ -10,21 +10,24 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('productos', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->string('descripcion')->nullable();
-            $table->decimal('precio_c', 4,2);
-            $table->decimal('precio_v', 4,2);
-            $table->tinyInteger('prod_estado')->unsigned()->default(1);
-            $table->unsignedBigInteger('sucursal_id');
-            $table->foreign('sucursal_id')->references('id')->on('sucursales');
-            $table->unsignedBigInteger('cocinero_id');
-            $table->foreign('cocinero_id')->references('id')->on('users');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('productos', function (Blueprint $table) {
+        $table->id();
+        $table->string('nombre');
+        $table->string('descripcion')->nullable();
+        $table->decimal('precio_c', 6, 2)->nullable(); // Precio de compra nulleable
+        $table->decimal('precio_v', 6, 2)->nullable(); // Precio de venta nulleable
+        $table->tinyInteger('prod_estado')->unsigned()->default(1);
+        $table->integer('stock')->unsigned()->default(0);
+        $table->string('categoria')->nullable(); // Categoría del producto
+
+        $table->foreignId('sucursal_id')->constrained('sucursales');
+        $table->foreignId('cocinero_id')->nullable()->constrained('users');
+
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.
