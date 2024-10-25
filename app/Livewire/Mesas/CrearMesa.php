@@ -14,7 +14,7 @@ class CrearMesa extends Component
     public $sucursal_id;
     public $sucursales;
 
-    //ESTO ESTA MAL- FIJATE EN EL TIPO DEL CAMPO MESAS_ESTADO
+    //ESTO ESTA MAL- FIJATE EN EL TIPO DEL CAMPO MESAS_ESTADO en la migración
 
     const ESTADO_DISPONIBLE = 1;
     const ESTADO_OCUPADA = 2;

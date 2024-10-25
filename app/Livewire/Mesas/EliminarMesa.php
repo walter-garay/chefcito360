@@ -26,17 +26,16 @@ class EliminarMesa extends Component
 
     public function confirmarEliminar()
     {
+        //modificar esto porque esta mal
         // Cambia el estado de la mesa a "inactiva" 
-       /* $this->mesa->mesas_estado = 0; // Usa el valor numérico para inactiva
+       /* $this->mesa->mesas_estado = 4; // Usa el valor numérico para inactiva
         $this->mesa->save(); // Guarda el cambio en la base de datos
 
         // Emite el evento de eliminación completada
         $this->dispatch('eliminado');
         $this->cerrarModal(); // Cierra el modal */
 
-        $this->mesa->delete();
-        $this->dispatch('eliminado');
-        $this->cerrarModal();
+        
     }
 
     public function cerrarModal()
