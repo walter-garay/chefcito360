@@ -28,27 +28,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($productos as $producto)
+                    @if($productos->count() > 0)
+                        @foreach ($productos as $producto)
+                            <tr>
+                                <td class="px-6 py-4">{{ $producto->id }}</td>
+                                <td class="px-6 py-4">{{ $producto->nombre }}</td>
+                                <td class="px-6 py-4">{{ $producto->descripcion }}</td>
+                                <td class="px-6 py-4">S/. {{ number_format($producto->precio_c, 2) }}</td>
+                                <td class="px-6 py-4">S/. {{ number_format($producto->precio_v, 2) }}</td>
+                                <td class="px-6 py-4">{{ $producto->stock }}</td>
+                                <td class="px-6 py-4">{{ $producto->categoria }}</td>
+                                <td class="px-6 py-4">{{ $producto->sucursal->nombre }}</td>
+                                <td class="px-6 py-6 flex">
+                                    <x-button wire:click="editProducto({{ $producto->id }})" class="w-8 h-8 flex justify-center">
+                                        <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
+                                    </x-button>
+                                    <x-danger-button wire:click="confirmDelete({{ $producto->id }})" class="w-8 h-8 flex justify-center">
+                                        <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
+                                    </x-danger-button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td class="px-6 py-4">{{ $producto->id }}</td>
-                            <td class="px-6 py-4">{{ $producto->nombre }}</td>
-                            <td class="px-6 py-4">{{ $producto->descripcion }}</td>
-                            <td class="px-6 py-4">S/. {{ number_format($producto->precio_c, 2) }}</td>
-                            <td class="px-6 py-4">S/. {{ number_format($producto->precio_v, 2) }}</td>
-                            <td class="px-6 py-4">{{ $producto->stock }}</td>
-                            <td class="px-6 py-4">{{ $producto->categoria }}</td>
-                            <td class="px-6 py-4">{{ $producto->sucursal->nombre }}</td>
-                            <td class="px-6 py-6 flex">
-                                <x-button wire:click="editProducto({{ $producto->id }})" class="w-8 h-8 flex justify-center">
-                                    <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
-                                </x-button>
-                                <x-danger-button wire:click="confirmDelete({{ $producto->id }})" class="w-8 h-8 flex justify-center">
-                                    <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
-                                </x-danger-button>
-                            </td>
+                            <td colspan="9" class="px-6 py-4 text-center">No se ha registrado ningún producto</td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
+
             </table>
         </div>
     </div>

@@ -21,6 +21,10 @@
                     </x-nav-link>
                     @endrole
 
+                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
+                        {{ __('Sucursales') }}
+                    </x-nav-link>
+
                     <x-nav-link href="{{ route('platillos.index') }}" :active="request()->routeIs('platillos.index')">
                         {{ __('Platillos') }}
                     </x-nav-link>
@@ -31,10 +35,6 @@
 
                     <x-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
                         {{ __('Inventario') }}
-                    </x-nav-link>
-
-                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
-                        {{ __('Sucursales') }}
                     </x-nav-link>
 
                     <x-nav-link href="{{ route('mesas.index') }}" :active="request()->routeIs('mesas.index')">
