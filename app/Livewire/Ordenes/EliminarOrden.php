@@ -26,7 +26,7 @@ class EliminarOrden extends Component
     public function confirmarEliminar()
     {
         
-        $this->orden->estado = 0; 
+        $this->orden->ord_estado = 0; 
         $this->orden->save();
 
         $this->dispatch('ordenEliminada'); 
