@@ -32,8 +32,10 @@
                                 <td class="px-6 py-4">{{ $user->name }}</td>
                                 <td class="px-6 py-4">{{ $user->email }}</td>
                                 <td class="px-6 py-4">
-                                    <x-button wire:click="editUser({{ $user->id }})" class="mr-2 bg-blue-500">Editar</x-button>
-                                    <x-button wire:click="deleteUser({{ $user->id }})" class="bg-red-500">Eliminar</x-button>
+                                    <x-button wire:click="editUser({{ $user->id }})"
+                                        class="mr-2 bg-blue-500">Editar</x-button>
+                                    <x-button wire:click="deleteUser({{ $user->id }})"
+                                        class="bg-red-500">Eliminar</x-button>
                                 </td>
                             </tr>
                         @endforeach
@@ -58,9 +60,12 @@
                                 <td class="px-6 py-4">{{ $role->id }}</td>
                                 <td class="px-6 py-4">{{ $role->name }}</td>
                                 <td class="px-6 py-4">
-                                    <x-button wire:click="editRole({{ $role->id }})" class="mr-2 bg-blue-500">Editar</x-button>
-                                    <x-button wire:click="deleteRole({{ $role->id }})" class="bg-red-500">Eliminar</x-button>
-                                    <x-button wire:click="showPermissions({{ $role->id }})" class="bg-green-500">Mostrar Permisos</x-button>
+                                    <x-button wire:click="editRole({{ $role->id }})"
+                                        class="mr-2 bg-blue-500">Editar</x-button>
+                                    <x-button wire:click="deleteRole({{ $role->id }})"
+                                        class="bg-red-500">Eliminar</x-button>
+                                    <x-button wire:click="showPermissions({{ $role->id }})"
+                                        class="bg-green-500">Mostrar Permisos</x-button>
                                 </td>
                             </tr>
                         @endforeach
@@ -86,11 +91,13 @@
                 <!-- Permisos -->
                 <div class="mt-4">
                     <x-label value="Permisos" />
-                    @if($permissions) <!-- Solo mostrar si hay permisos -->
+                    @if ($permissions)
+                        <!-- Solo mostrar si hay permisos -->
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                             @foreach ($permissions as $permission)
                                 <label class="flex items-center">
-                                    <input type="checkbox" value="{{ $permission->id }}" wire:model="selectedPermissions" />
+                                    <input type="checkbox" value="{{ $permission->id }}"
+                                        wire:model="selectedPermissions" />
                                     <span class="ml-2 text-sm text-gray-600">{{ $permission->name }}</span>
                                 </label>
                             @endforeach
@@ -132,6 +139,16 @@
                     <x-input-error for="userPassword" />
                 @endif
 
+                <!-- Sucursal -->
+                <x-label for="sucursal" value="Sucursal" class="mt-4" />
+                <x-select id="sucursal" wire:model="userSucursal" class="block w-full mt-1">
+                    <option value="">Seleccione una sucursal</option>
+                    @foreach ($sucursales as $sucursal)
+                        <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+                    @endforeach
+                </x-select>
+                <x-input-error for="userSucursal" />
+
                 <!-- Roles -->
                 <x-label for="roles" value="Roles" class="mt-4" />
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -146,7 +163,8 @@
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button wire:click="closeUserModal">Cancelar</x-secondary-button>
-            <x-button wire:click="{{ $isEditingUser ? 'updateUser' : 'storeUser' }}" class="ml-2">{{ $isEditingUser ? 'Actualizar' : 'Registrar' }}</x-button>
+            <x-button wire:click="{{ $isEditingUser ? 'updateUser' : 'storeUser' }}"
+                class="ml-2">{{ $isEditingUser ? 'Actualizar' : 'Registrar' }}</x-button>
         </x-slot>
     </x-dialog-modal>
 
@@ -154,7 +172,7 @@
     <x-dialog-modal wire:model="showModalPermissions" maxWidth="2xl">
         <x-slot name="title">{{ __('Permisos del Rol') }}</x-slot>
         <x-slot name="content">
-            @if($verPermissions && $verPermissions->isNotEmpty())
+            @if ($verPermissions && $verPermissions->isNotEmpty())
                 <ul>
                     @foreach ($verPermissions as $permission)
                         <li>{{ $permission }}</li>

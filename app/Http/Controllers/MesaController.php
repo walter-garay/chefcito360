@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mesa;
+use App\Models\Sucursales;
 use Illuminate\Http\Request;
 
 class MesaController extends Controller
@@ -11,14 +12,18 @@ class MesaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-        return view('mesas.index');
-    }
+{
+    // Obtener todas las mesas con su relación de sucursal
+    $mesas = Mesa::with('sucursal')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Obtener todas las sucursales
+    $sucursales = Sucursales::all();
+
+    // Pasar los datos a la vista
+    return view('mesas.index', compact('mesas', 'sucursales'));
+}
+
+
     public function create()
     {
         //
@@ -27,9 +32,11 @@ class MesaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    /*
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -37,12 +44,10 @@ class MesaController extends Controller
      */
     public function show(Mesa $mesa)
     {
-        //
+        // Devolver los detalles de la mesa en un formato JSON (para usar en modales, etc.)
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Mesa $mesa)
     {
         //
@@ -53,14 +58,13 @@ class MesaController extends Controller
      */
     public function update(Request $request, Mesa $mesa)
     {
-        //
+        // Validar los datos
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Mesa $mesa)
     {
-        //
+
     }
+
 }
