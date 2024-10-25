@@ -46,13 +46,13 @@ class EditarMesa extends Component
         }
     }
 
-    // Mostrar modal de confirmación antes de guardar cambios
+
     public function confirmarEdicion()
     {
-        $this->showConfirmModal = true; // Abre el modal de confirmación
+        $this->showConfirmModal = true; 
     }
 
-    // Guardar los cambios después de confirmar
+    
     public function actualizarMesa()
     {
         $this->validate([

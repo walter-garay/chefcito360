@@ -14,9 +14,12 @@ class CrearMesa extends Component
     public $sucursal_id;
     public $sucursales;
 
+    //ESTO ESTA MAL- FIJATE EN EL TIPO DEL CAMPO MESAS_ESTADO
+
     const ESTADO_DISPONIBLE = 1;
     const ESTADO_OCUPADA = 2;
     const ESTADO_RESERVADA = 3;
+    //
 
     protected $rules = [
         'numero' => 'required|integer|min:1|unique:mesas,numero',
@@ -41,19 +44,20 @@ class CrearMesa extends Component
     }
 
     public function guardarMesa()
-{
-    $this->validate();
+    {
+        $this->validate();
 
-    Mesa::create([
-        'numero' => $this->numero,
-        'mesas_estado' => $this->mesas_estado,
-        'sucursal_id' => $this->sucursal_id,
-    ]);
+        Mesa::create([
+            'numero' => $this->numero,
+            'mesas_estado' => $this->mesas_estado,
+            'sucursal_id' => $this->sucursal_id,
+        ]);
 
+        $this->dispatch('guardado');
+        session()->flash('message', 'Mesa guardada correctamente.');
 
-    session()->flash('message', 'Mesa guardada correctamente.');
-    $this->cerrarModal();
-}
+        $this->cerrarModal();
+    }
 
 
     public function render()
@@ -61,4 +65,3 @@ class CrearMesa extends Component
         return view('livewire.mesas.crear-mesa');
     }
 }
-

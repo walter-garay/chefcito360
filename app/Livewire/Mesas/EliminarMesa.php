@@ -20,24 +20,23 @@ class EliminarMesa extends Component
 
     public function eliminar($id)
     {
-        // Carga la mesa por su ID
-        $this->mesa = Mesa::find($id);
-        if ($this->mesa) {
             $this->abrirModal(); // Abre el modal
-        } else {
-            session()->flash('error', 'Mesa no encontrada.');
-        }
+            $this->mesa = Mesa::find($id); // Obtiene la mesa a eliminar
     }
 
     public function confirmarEliminar()
     {
-        // Cambia el estado de la mesa a "inactiva"
-        $this->mesa->mesas_estado = 4; // Usa el valor numérico para inactiva
+        // Cambia el estado de la mesa a "inactiva" 
+       /* $this->mesa->mesas_estado = 0; // Usa el valor numérico para inactiva
         $this->mesa->save(); // Guarda el cambio en la base de datos
 
         // Emite el evento de eliminación completada
         $this->dispatch('eliminado');
-        $this->cerrarModal(); // Cierra el modal
+        $this->cerrarModal(); // Cierra el modal */
+
+        $this->mesa->delete();
+        $this->dispatch('eliminado');
+        $this->cerrarModal();
     }
 
     public function cerrarModal()
