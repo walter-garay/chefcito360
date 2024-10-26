@@ -6,6 +6,7 @@
                 <th scope="col" class="px-6 py-4">Total</th>
                 <th scope="col" class="px-6 py-4">Mesa</th>
                 <th scope="col" class="px-6 py-4">Mesero</th>
+                <th scope="col" class="px-6 py-4">Estado</th>
                 <th scope="col" class="px-6 py-4">Acciones</th>
             </tr>
         </thead>
@@ -17,6 +18,7 @@
                         <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ number_format($orden->total, 2) }}</td>
                         <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $orden->numero_mesa }}</td>
                         <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $orden->usuario }}</td>
+                        <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $orden->estado }}</td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             <x-icon class="px-2 h-7 bg-violet-900" wire:click="editar({{ $orden->id }})">
                                 <i class="fa-sharp-duotone fa-solid fa-pencil"></i>

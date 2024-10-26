@@ -11,13 +11,6 @@
                         <x-input-error for="numero" class="mt-2" />
                     </div>
 
-                    <!-- Total -->
-                    <div class="mt-4">
-                        <x-label for="total" value="Total" />
-                        <x-input id="total" wire:model="total" type="number" class="mt-1 block w-full" step="0.01" readonly />
-                        <x-input-error for="total" class="mt-2" />
-                    </div>
-
                     <!-- Selección de Mesa -->
                     <div class="mt-4">
                         <x-label for="mesa_id" value="Mesa" />
@@ -42,7 +35,6 @@
                         <x-label value="Platillos" />
                         @foreach($platillos as $index => $platillo)
                             <div class="flex items-center mb-2">
-                                <!-- Selector de platillo -->
                                 <select wire:model="platillos.{{ $index }}.id" wire:change="calcularTotal" class="block w-3/5 mt-1 mr-2">
                                     <option value="">Seleccione un platillo</option>
                                     @foreach($todosPlatillos as $item)
@@ -50,7 +42,6 @@
                                     @endforeach
                                 </select>
 
-                                <!-- Campo de cantidad -->
                                 <x-input type="number" wire:model="platillos.{{ $index }}.cantidad" wire:change="calcularTotal" min="1" class="w-1/5" />
 
                                 <button wire:click.prevent="eliminarPlatillo({{ $index }})" class="text-red-500 hover:text-red-700">
@@ -63,6 +54,25 @@
 
                         <!-- Botón para agregar otro platillo -->
                         <x-button class="mt-4" wire:click.prevent="agregarPlatillo">Agregar Platillo</x-button>
+                    </div>
+
+                    <!-- Selección de Estado -->
+                    <div class="mt-4">
+                        <x-label for="estado" value="Estado" />
+                        <select id="estado" wire:model="estado" class="block w-full mt-1 {{ $estado === 'Pedido' ? 'estado-pedido' : ($estado === 'Servido' ? 'estado-servido' : ($estado === 'Pagado' ? 'estado-pagado' : ($estado === 'Cancelado' ? 'estado-cancelado' : ''))) }}">
+                            <option value="">Seleccione un estado</option>
+                            @foreach($estados as $estado)
+                                <option value="{{ $estado }}">{{ $estado }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="estado" class="mt-2" />
+                    </div>
+
+                    <!-- Total calculado -->
+                    <div class="mt-4">
+                        <x-label for="total" value="Total" />
+                        <x-input id="total" wire:model="total" type="number" step="0.01" class="mt-1 block w-full bg-gray-100" readonly />
+                        <x-input-error for="total" class="mt-2" />
                     </div>
                 </form>
             </section>
