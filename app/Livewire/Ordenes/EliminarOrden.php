@@ -26,7 +26,7 @@ class EliminarOrden extends Component
     public function confirmarEliminar()
     {
         
-        $this->orden->estado = 0; 
+        $this->orden->ord_estado = 0; 
         $this->orden->save();
 
         $this->dispatch('ordenEliminada'); 
@@ -35,7 +35,9 @@ class EliminarOrden extends Component
 
     public function cerrarModal()
     {
+        $this->resetValidation();
         $this->showModal = false;
+        $this->dispatch('cerrarModal'); // Emitir el evento cerrarModal
     }
 
     public function abrirModal()

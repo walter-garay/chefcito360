@@ -10,4 +10,9 @@ class Ordenes extends Model
     use HasFactory;
     public $timestamps = false;
 
+    public function platillos()
+    {
+        return $this->belongsToMany(Platillo::class, 'platillos_ordenes', 'orden_id', 'platillo_id')
+                    ->withPivot('cantidad');
+    }
 }
