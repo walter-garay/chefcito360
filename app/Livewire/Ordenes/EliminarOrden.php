@@ -35,7 +35,9 @@ class EliminarOrden extends Component
 
     public function cerrarModal()
     {
+        $this->resetValidation();
         $this->showModal = false;
+        $this->dispatch('cerrarModal'); // Emitir el evento cerrarModal
     }
 
     public function abrirModal()

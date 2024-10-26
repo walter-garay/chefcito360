@@ -40,29 +40,34 @@
                     </div>
 
                     <!-- Selección de Platillos -->
-<div class="mt-4">
+                    <div class="mt-4">
     <x-label value="Platillos" />
     @foreach($platillos as $index => $platillo)
         <div class="flex items-center mb-2">
-            <select wire:model="platillos.{{ $index }}.id" class="block w-3/5 mt-1 mr-2">
+            <!-- Selección de platillo -->
+            <select wire:model="platillos.{{ $index }}.id" wire:change="calcularTotal" class="block w-3/5 mt-1 mr-2">
                 <option value="">Seleccione un platillo</option>
-                @if(isset($todosPlatillos) && count($todosPlatillos) > 0)
-                    @foreach($todosPlatillos as $item)
-                        <option value="{{ $item->id }}">{{ $item->nombre }} - ${{ number_format($item->precio, 2) }}</option>
-                    @endforeach
-                @else
-                    <option value="">No hay platillos disponibles</option>
-                @endif
+                @foreach($todosPlatillos as $item)
+                    <option value="{{ $item->id }}">{{ $item->nombre }} - ${{ number_format($item->precio, 2) }}</option>
+                @endforeach
             </select>
 
             <!-- Campo para la cantidad -->
-            <x-input type="number" wire:model="platillos.{{ $index }}.cantidad" min="1" class="w-1/5" />
+            <x-input type="number" wire:model="platillos.{{ $index }}.cantidad" wire:change="calcularTotal" min="1" class="w-1/5" />
+
+            <!-- Icono para eliminar platillo -->
+            <button wire:click.prevent="eliminarPlatillo({{ $index }})" class="text-red-500 hover:text-red-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
     @endforeach
 
     <!-- Botón para agregar otro platillo -->
     <x-button class="mt-4" wire:click.prevent="agregarPlatillo">Agregar Platillo</x-button>
 </div>
+
 
 
 

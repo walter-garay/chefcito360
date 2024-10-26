@@ -52,17 +52,24 @@ class CrearOrden extends Component
     }
     
 
-    public function updatedPlatillos()
+    public function updatedPlatillos($value, $name)
+{
+    $this->calcularTotal();
+}
+
+    public function eliminarPlatillo($index)
     {
-        $this->calcularTotal();
+        unset($this->platillos[$index]);
+        $this->platillos = array_values($this->platillos); // Reindexa el array
+        $this->calcularTotal(); // Recalcula el total
     }
 
-    private function calcularTotal()
+    public function calcularTotal()
     {
         $this->total = 0;
 
         foreach ($this->platillos as &$platillo) {
-            if ($platillo['id'] && $platillo['cantidad']) {
+            if (isset($platillo['id']) && $platillo['id'] && isset($platillo['cantidad']) && $platillo['cantidad']) {
                 $item = Platillo::find($platillo['id']);
                 $platillo['subtotal'] = $item->precio * $platillo['cantidad'];
                 $this->total += $platillo['subtotal'];
