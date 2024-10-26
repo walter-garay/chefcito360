@@ -9,4 +9,21 @@ class Mesa extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
+
+    protected $fillable = [
+        'numero',
+        'mesas_estado',
+        'sucursal_id',
+    ];
+
+    const ESTADO_DISPONIBLE = 1;
+    const ESTADO_RESERVADA = 2;
+    const ESTADO_OCUPADA = 3;
+
+    public function sucursal()
+    {
+
+        return $this->belongsTo(Sucursales::class, 'sucursal_id');
+    }
 }
