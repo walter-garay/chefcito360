@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         $gerente = Role::create(['name' => 'GERENTE']);
         $cajero = Role::create(['name' => 'CAJERO']);
         $mesero = Role::create(['name' => 'MESERO']);
-        $cosinero = Role::create(['name' => 'COSINERO']);
+        $cocinero = Role::create(['name' => 'COCINERO']);
 
 
         Permission::create(['name' => 'Roles'])->syncRoles($admin);

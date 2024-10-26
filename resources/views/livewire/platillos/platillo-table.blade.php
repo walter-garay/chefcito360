@@ -9,7 +9,7 @@
         <div class="flex items-center justify-between mb-4">
             <!-- Botón para abrir el modal de agregar platillo -->
             <x-button wire:click="openModal" class="mr-2 bg-blue-600 hover:bg-blue-700">
-                Agregar Platillo
+                Agregar platillo
             </x-button>
         </div>
 
@@ -19,11 +19,11 @@
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-6 py-3">#</th>
-                        <th class="px-6 py-3">Foto</th> <!-- Nueva columna -->
+                        <th class="px-6 py-3">Foto</th>
                         <th class="px-6 py-3">Nombre</th>
-                        <th class="px-6 py-3">Descripción</th>
                         <th class="px-6 py-3">Precio</th>
                         <th class="px-6 py-3">Categoría</th>
+                        <th class="px-6 py-3">Estado</th>
                         <th class="px-6 py-3">Sucursal</th>
                         <th class="px-6 py-3">Acciones</th>
                     </tr>
@@ -69,9 +69,7 @@
         </x-slot>
 
         <x-slot name="content">
-            <!-- Formulario para agregar o editar platillo -->
             <form>
-                <!-- Nombre -->
                 <x-label for="nombre" value="Nombre del Platillo" />
                 <x-input id="nombre" type="text" wire:model="nombre" class="block w-full mt-1" />
                 <x-input-error for="nombre" />
@@ -81,12 +79,10 @@
                 <x-input id="descripcion" type="text" wire:model="descripcion" class="block w-full mt-1" />
                 <x-input-error for="descripcion" />
 
-                <!-- Precio -->
                 <x-label for="precio" value="Precio" class="mt-4" />
                 <x-input id="precio" type="number" step="0.01" wire:model="precio" class="block w-full mt-1" />
                 <x-input-error for="precio" />
 
-                <!-- Foto -->
                 <x-label for="imagen" value="Foto del Platillo" class="mt-4" />
                 <input type="file" wire:model="imagen" id="imagen" class="block w-full mt-1">
                 <x-input-error for="imagen" />
@@ -96,7 +92,6 @@
                     <img src="{{ asset('storage/' . $imagenActual) }}" alt="Imagen actual" class="w-16 h-16 mt-2 rounded">
                 @endif
 
-                <!-- Categoría usando dropdown -->
                 <x-label for="categoria" value="Categoría" class="mt-4" />
                 <x-dropdown width="full" wire:model="categoria" dropdownClasses="mt-2">
                     <x-slot name="trigger">
@@ -160,6 +155,4 @@
             </x-danger-button>
         </x-slot>
     </x-confirmation-modal>
-
-
 </div>

@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->decimal('precio', 4,2);
+            $table->decimal('precio', 4, 2);
             $table->string('imagen')->nullable();
-            $table->enum('categoria', ['entrada','principal','postre','bebida']);
+            $table->enum('categoria', ['entrada', 'principal', 'postre', 'bebida']);
+            $table->string('estado')->nullable(); // Estado nulleable
+            $table->text('comentario')->nullable(); // Nuevo campo comentario
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->timestamps();
         });
+
     }
 
     /**

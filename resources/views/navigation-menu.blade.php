@@ -21,9 +21,26 @@
                     </x-nav-link>
                     @endcan
                     @can('Platillos ver')
-                    <x-nav-link href="{{ route('platillos.index') }}" :active="request()->routeIs('platillos.index')">
-                        {{ __('Platillos') }}
+                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
+                        {{ __('Sucursales') }}
                     </x-nav-link>
+
+                    @role('ADMINISTRADOR')
+                    <!-- Select simulado como nav-link -->
+                    <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
+                        <select id="inventario" onchange="window.location.href=this.value" class="text-sm font-medium text-gray-500 bg-transparent border-none appearance-none cursor-pointer focus:outline-none">
+                            <option selected disabled>{{ __('Inventario') }}</option>
+                            <option value="{{ route('platillos.index') }}" {{ request()->routeIs('platillos.index') ? 'selected' : '' }}>
+                                {{ __('Platillos') }}
+                            </option>
+                            <option value="{{ route('productos.index') }}" {{ request()->routeIs('productos.index') ? 'selected' : '' }}>
+                                {{ __('Productos') }}
+                            </option>
+                        </select>
+
+                    </x-nav-link>
+                    @endrole
+
                     @endcan
                     @can('Proveedores ver')
                     <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
@@ -51,6 +68,7 @@
                     </x-nav-link>
                     @endcan
                 </div>
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

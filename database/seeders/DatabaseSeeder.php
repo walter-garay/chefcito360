@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             SucursalSeeder::class,
             UserSeeder::class,
+            SucursalesSeeder::class,
+            PlatillosSeeder::class,
+            ProveedoresSeeder::class,
+            ProductosSeeder::class,
         ]);
 
     }

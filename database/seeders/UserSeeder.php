@@ -13,16 +13,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Crear usuario ADMINISTRADOR
         User::create([
             'name' => 'ADMINISTRADOR',
             'email' => 'admin@chefcito.com',
             'password' => bcrypt('123456789'),
+            'email_verified_at' => now(),
         ])->assignRole('ADMINISTRADOR');
 
+        // Crear usuario GERENTE
         User::create([
             'name' => 'GERENTE',
             'email' => 'gerente@chefcito.com',
             'password' => bcrypt('123456789'),
+            'email_verified_at' => now(),
         ])->assignRole('GERENTE');
 
         DB::table('user_sucursal')->insert([

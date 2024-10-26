@@ -17,8 +17,10 @@ class Platillo extends Model
         'nombre',
         'descripcion',
         'precio',
-        'imagen', // Agregar el campo de la imagen
+        'imagen',
         'categoria',
+        'estado',
+        'comentario',
         'sucursal_id',
     ];
 

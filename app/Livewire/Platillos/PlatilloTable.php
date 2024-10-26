@@ -11,12 +11,14 @@ class PlatilloTable extends Component
 {
     use WithFileUploads;
 
-    public $platillos, $nombre, $descripcion, $precio, $categoria, $sucursal_id, $imagen, $imagenActual;
+    public $platillos, $nombre, $descripcion, $precio, $categoria, $sucursal_id, $imagen, $imagenActual, $estado, $comentario;
     public $isEditing = false;
     public $showModal = false;
     public $showConfirmModal = false;
     public $sucursales;
     public $platilloIdToDelete;
+    public $platilloId;
+
 
     protected $rules = [
         'nombre' => 'required|string|max:255',
@@ -25,6 +27,8 @@ class PlatilloTable extends Component
         'categoria' => 'required|string',
         'sucursal_id' => 'required|exists:sucursales,id',
         'imagen' => 'nullable|image|max:1024',
+        'estado' => 'nullable',
+        'comentario' => 'nullable|string|max:500',
     ];
 
     public function mount()
@@ -45,6 +49,7 @@ class PlatilloTable extends Component
         $platillo = Platillo::findOrFail($id);
         $this->fill($platillo->toArray());
         $this->imagenActual = $platillo->imagen;
+        $this->platilloId = $id;
         $this->isEditing = true;
         $this->showModal = true;
     }
@@ -75,6 +80,8 @@ class PlatilloTable extends Component
             'categoria' => $this->categoria,
             'sucursal_id' => $this->sucursal_id,
             'imagen' => $imagenPath,
+            'estado' => $this->estado,
+            'comentario' => $this->comentario,
         ]);
 
         session()->flash('message', 'Platillo creado con éxito.');
@@ -84,9 +91,11 @@ class PlatilloTable extends Component
 
     public function update()
     {
-        $this->validate();
+        $this->validate($this->rules);
 
-        $platillo = Platillo::findOrFail($this->id);
+        $platillo = Platillo::findOrFail($this->platilloId);
+
+        // Si hay una nueva imagen, la cargamos, de lo contrario, mantenemos la actual
         $imagenPath = $this->imagen ? $this->imagen->store('platillos', 'public') : $this->imagenActual;
 
         $platillo->update([
@@ -96,12 +105,15 @@ class PlatilloTable extends Component
             'categoria' => $this->categoria,
             'sucursal_id' => $this->sucursal_id,
             'imagen' => $imagenPath,
+            'estado' => $this->estado,
+            'comentario' => $this->comentario,
         ]);
 
         session()->flash('message', 'Platillo actualizado con éxito.');
         $this->closeModal();
         $this->platillos = Platillo::all();
     }
+
 
     public function closeModal()
     {
@@ -118,6 +130,9 @@ class PlatilloTable extends Component
         $this->sucursal_id = '';
         $this->imagen = null;
         $this->imagenActual = null;
+        $this->estado = '';
+        $this->comentario = '';
+        $this->platilloId = null;
     }
 
     public function render()

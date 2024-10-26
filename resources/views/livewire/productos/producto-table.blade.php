@@ -7,9 +7,45 @@
         @endif
 
         <div class="flex justify-between items-center mb-4">
+
             <x-button wire:click="openModal" class="mr-2 bg-blue-600 hover:bg-blue-700">
                 Agregar Producto
             </x-button>
+
+            <div class="flex gap-x-2">
+                <!-- Select para filtrar por categoría -->
+                <div>
+                    <select wire:model="categoriaSeleccionada" class="px-3 py-1 border border-gray-300 rounded-md">
+                        <option value="">CategorÍas</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Alimentos">Alimentos</option>
+                        <option value="Utensilios">Utensilios</option>
+                    </select>
+                </div>
+
+                <x-button  wire:click="exportar" class="bg-green-600 hover:bg-green-700">
+                    Exportar
+                </x-button>
+
+                <!-- Formulario de Importación -->
+                <form wire:submit.prevent="importar" enctype="multipart/form-data" class="flex items-center gap-2">
+                    <!-- Input de archivo oculto -->
+                    <input type="file" wire:model="file" id="fileInput" class="hidden" />
+
+                    <!-- Botón de Importación -->
+                    <x-button type="submit" class="bg-purple-500 hover:bg-purple-600">
+                        Importar
+                    </x-button>
+
+                    <!-- Ícono para abrir el explorador de archivos -->
+                    <label for="fileInput" class="cursor-pointer">
+                        <div class="bg-violet-400 hover:bg-violet-500 flex items-center justify-center p-2 rounded">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </label>
+                </form>
+            </div>
+
         </div>
 
         <div class="overflow-x-auto">
@@ -18,36 +54,42 @@
                     <tr class="bg-gray-100">
                         <th class="px-6 py-3">#</th>
                         <th class="px-6 py-3">Nombre</th>
-                        <th class="px-6 py-3">Descripción</th>
-                        <th class="px-6 py-3">Precio Compra</th>
-                        <th class="px-6 py-3">Precio Venta</th>
+                        <th class="px-6 py-3">Compra</th>
+                        <th class="px-6 py-3">Venta</th>
                         <th class="px-6 py-3">Stock</th>
                         <th class="px-6 py-3">Categoría</th>
                         <th class="px-6 py-3">Sucursal</th>
+                        <th class="px-6 py-3">Ingreso</th>
                         <th class="px-6 py-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($productos as $producto)
+                    @if($productos->count() > 0)
+                        @foreach ($productos as $producto)
+                            <tr>
+                                <td class="px-6 py-4">{{ $producto->id }}</td>
+                                <td class="px-6 py-4">{{ $producto->nombre }}</td>
+                                <td class="px-6 py-4">S/. {{ number_format($producto->precio_c, 2) }}</td>
+                                <td class="px-6 py-4">S/. {{ number_format($producto->precio_v, 2) }}</td>
+                                <td class="px-6 py-4">{{ $producto->stock }}</td>
+                                <td class="px-6 py-4">{{ $producto->categoria }}</td>
+                                <td class="px-6 py-4">{{ $producto->sucursal->nombre }}</td>
+                                <td class="px-6 py-4">{{ date('d/m/Y', strtotime($producto->created_at)) }}</td>
+                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                    <x-icon class="px-2 h-7 bg-violet-900" wire:click="editProducto({{ $producto->id }})">
+                                        <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
+                                    </x-icon>
+                                    <x-icon class="px-2 h-7 bg-red-900" wire:click="confirmDelete({{ $producto->id }})">
+                                        <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
+                                    </x-icon>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td class="px-6 py-4">{{ $producto->id }}</td>
-                            <td class="px-6 py-4">{{ $producto->nombre }}</td>
-                            <td class="px-6 py-4">{{ $producto->descripcion }}</td>
-                            <td class="px-6 py-4">S/. {{ number_format($producto->precio_c, 2) }}</td>
-                            <td class="px-6 py-4">S/. {{ number_format($producto->precio_v, 2) }}</td>
-                            <td class="px-6 py-4">{{ $producto->stock }}</td>
-                            <td class="px-6 py-4">{{ $producto->categoria }}</td>
-                            <td class="px-6 py-4">{{ $producto->sucursal->nombre }}</td>
-                            <td class="px-6 py-6 flex">
-                                <x-button wire:click="editProducto({{ $producto->id }})" class="w-8 h-8 flex justify-center">
-                                    <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
-                                </x-button>
-                                <x-danger-button wire:click="confirmDelete({{ $producto->id }})" class="w-8 h-8 flex justify-center">
-                                    <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
-                                </x-danger-button>
-                            </td>
+                            <td colspan="10" class="px-6 py-4 text-center">No se ha registrado ningún producto</td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -98,6 +140,13 @@
                     </x-slot>
                 </x-dropdown>
                 <x-input-error for="sucursal_id" />
+
+                <!-- Fecha de ingreso -->
+                @if ($isEditing)
+                    <x-label for="fecha_ingreso" value="Fecha de Ingreso" class="mt-4" />
+                    <x-input id="fecha_ingreso" type="text" wire:model="fecha_ingreso" class="mt-1 block w-full" readonly />
+                @endif
+
             </form>
         </x-slot>
 
