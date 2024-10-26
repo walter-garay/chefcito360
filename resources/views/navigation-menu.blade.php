@@ -45,7 +45,7 @@
                         {{ __('Mesas') }}
                     </x-nav-link>
                     @endcan
-                    @can('Ordenes ver')
+                    @can('Mesas ver')
                     <x-nav-link href="{{ route('ordenes.index') }}" :active="request()->routeIs('ordenes.index')">
                         {{ __('Ordenes') }}
                     </x-nav-link>
