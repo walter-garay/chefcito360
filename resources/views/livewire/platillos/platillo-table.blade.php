@@ -20,7 +20,6 @@
                         <th class="px-6 py-3">#</th>
                         <th class="px-6 py-3">Foto</th>
                         <th class="px-6 py-3">Nombre</th>
-                        <th class="px-6 py-3">Descripción</th>
                         <th class="px-6 py-3">Precio</th>
                         <th class="px-6 py-3">Categoría</th>
                         <th class="px-6 py-3">Estado</th>
@@ -41,18 +40,17 @@
                                     @endif
                                 </td>
                                 <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $platillo->nombre }}</td>
-                                <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $platillo->descripcion }}</td>
                                 <td scope="row" class="px-6 py-4 whitespace-nowrap">S/. {{ number_format($platillo->precio, 2) }}</td>
                                 <td scope="row" class="px-6 py-4 capitalize whitespace-nowrap">{{ $platillo->categoria }}</td>
                                 <td scope="row" class="px-6 py-4 capitalize whitespace-nowrap">{{ $platillo->estado }}</td>
                                 <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $platillo->sucursal->nombre }}</td>
                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                    <x-button wire:click="editPlatillo({{ $platillo->id }})">
-                                        Editar
-                                    </x-button>
-                                    <x-danger-button wire:click="confirmDelete({{ $platillo->id }})">
-                                        Eliminar
-                                    </x-danger-button>
+                                    <x-icon class="px-2 h-7 bg-violet-900" wire:click="editPlatillo({{ $platillo->id }})">
+                                        <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
+                                    </x-icon>
+                                    <x-icon class="px-2 h-7 bg-red-800" wire:click="confirmDelete({{ $platillo->id }})">
+                                        <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
+                                    </x-icon>
                                 </td>
                             </tr>
                         @endforeach

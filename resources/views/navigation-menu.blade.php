@@ -25,22 +25,29 @@
                         {{ __('Sucursales') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('platillos.index') }}" :active="request()->routeIs('platillos.index')">
-                        {{ __('Platillos') }}
+                    <!-- Select simulado como nav-link -->
+                    <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
+                        <select id="inventario" onchange="window.location.href=this.value" class="text-gray-500 text-sm font-medium bg-transparent border-none focus:outline-none cursor-pointer appearance-none">
+                            <option selected disabled>{{ __('Inventario') }}</option>
+                            <option value="{{ route('platillos.index') }}" {{ request()->routeIs('platillos.index') ? 'selected' : '' }}>
+                                {{ __('Platillos') }}
+                            </option>
+                            <option value="{{ route('productos.index') }}" {{ request()->routeIs('productos.index') ? 'selected' : '' }}>
+                                {{ __('Productos') }}
+                            </option>
+                        </select>
+                    
                     </x-nav-link>
 
                     <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
                         {{ __('Proveedores') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
-                        {{ __('Inventario') }}
-                    </x-nav-link>
-
                     <x-nav-link href="{{ route('mesas.index') }}" :active="request()->routeIs('mesas.index')">
                         {{ __('Mesas') }}
                     </x-nav-link>
                 </div>
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

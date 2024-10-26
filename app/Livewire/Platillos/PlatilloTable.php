@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire\Platillos;
-use Illuminate\Support\Facades\Auth;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -34,14 +33,7 @@ class PlatilloTable extends Component
 
     public function mount()
     {
-        if (Auth::user()->hasRole('ADMINISTRADOR')) {
-            // Filtra los platillos de la sucursal asignada al administrador
-            $this->platillos = Platillo::where('sucursal_id', Auth::user()->sucursal_id)->get();
-        } else {
-            // Muestra todos los platillos para otros roles
-            $this->platillos = Platillo::all();
-        }
-
+        $this->platillos = Platillo::all();
         $this->sucursales = Sucursales::all();
     }
 

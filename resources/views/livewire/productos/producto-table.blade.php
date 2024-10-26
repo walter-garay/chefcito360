@@ -18,12 +18,12 @@
                     <tr class="bg-gray-100">
                         <th class="px-6 py-3">#</th>
                         <th class="px-6 py-3">Nombre</th>
-                        <th class="px-6 py-3">Descripción</th>
-                        <th class="px-6 py-3">Precio Compra</th>
-                        <th class="px-6 py-3">Precio Venta</th>
+                        <th class="px-6 py-3">Compra</th>
+                        <th class="px-6 py-3">Venta</th>
                         <th class="px-6 py-3">Stock</th>
                         <th class="px-6 py-3">Categoría</th>
                         <th class="px-6 py-3">Sucursal</th>
+                        <th class="px-6 py-3">Ingreso</th>
                         <th class="px-6 py-3">Acciones</th>
                     </tr>
                 </thead>
@@ -33,29 +33,28 @@
                             <tr>
                                 <td class="px-6 py-4">{{ $producto->id }}</td>
                                 <td class="px-6 py-4">{{ $producto->nombre }}</td>
-                                <td class="px-6 py-4">{{ $producto->descripcion }}</td>
                                 <td class="px-6 py-4">S/. {{ number_format($producto->precio_c, 2) }}</td>
                                 <td class="px-6 py-4">S/. {{ number_format($producto->precio_v, 2) }}</td>
                                 <td class="px-6 py-4">{{ $producto->stock }}</td>
                                 <td class="px-6 py-4">{{ $producto->categoria }}</td>
                                 <td class="px-6 py-4">{{ $producto->sucursal->nombre }}</td>
-                                <td class="px-6 py-6 flex">
-                                    <x-button wire:click="editProducto({{ $producto->id }})" class="w-8 h-8 flex justify-center">
+                                <td class="px-6 py-4">{{ date('d/m/Y', strtotime($producto->created_at)) }}</td>
+                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                    <x-icon class="px-2 h-7 bg-violet-900" wire:click="editProducto({{ $producto->id }})">
                                         <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
-                                    </x-button>
-                                    <x-danger-button wire:click="confirmDelete({{ $producto->id }})" class="w-8 h-8 flex justify-center">
+                                    </x-icon>
+                                    <x-icon class="px-2 h-7 bg-red-900" wire:click="confirmDelete({{ $producto->id }})">
                                         <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
-                                    </x-danger-button>
+                                    </x-icon>
                                 </td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="9" class="px-6 py-4 text-center">No se ha registrado ningún producto</td>
+                            <td colspan="10" class="px-6 py-4 text-center">No se ha registrado ningún producto</td>
                         </tr>
                     @endif
                 </tbody>
-
             </table>
         </div>
     </div>
@@ -105,6 +104,13 @@
                     </x-slot>
                 </x-dropdown>
                 <x-input-error for="sucursal_id" />
+
+                <!-- Fecha de ingreso -->
+                <x-label for="fecha_ingreso" value="Fecha de Ingreso" class="mt-4" />
+                <x-input id="fecha_ingreso" type="text" wire:model="fecha_ingreso" class="mt-1 block w-full" placeholder="Fecha de ingreso"
+                    {{ $isEditing ? 'readonly' : '' }} />
+                <x-input-error for="fecha_ingreso" />
+
             </form>
         </x-slot>
 

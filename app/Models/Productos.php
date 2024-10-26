@@ -14,13 +14,14 @@ class Productos extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
-        'precio_c', // Precio de compra
-        'precio_v', // Precio de venta
+        'precio_c',
+        'precio_v',
         'prod_estado',
         'stock',
         'categoria',
         'sucursal_id',
-        'cocinero_id', // Este campo puede ser null
+        'cocinero_id',
+        'proveedor_id',
     ];
 
     // Relación con la tabla Sucursales
@@ -33,5 +34,11 @@ class Productos extends Model
     public function cocinero()
     {
         return $this->belongsTo(User::class, 'cocinero_id');
+    }
+
+    // Relación con la tabla Proveedores
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedores::class, 'proveedor_id');
     }
 }

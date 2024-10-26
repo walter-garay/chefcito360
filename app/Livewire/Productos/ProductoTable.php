@@ -4,6 +4,7 @@ namespace App\Livewire\Productos;
 
 use App\Models\Productos;
 use App\Models\Sucursales;
+use App\Models\Proveedores; 
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,11 +12,11 @@ class ProductoTable extends Component
 {
     use WithFileUploads;
 
-    public $producto_id, $productos, $nombre, $descripcion, $precio_c, $precio_v, $stock, $categoria, $sucursal_id, $imagen, $imagenActual;
+    public $producto_id, $productos, $nombre, $descripcion, $precio_c, $precio_v, $stock, $categoria, $sucursal_id, $proveedor_id, $imagen, $imagenActual;
     public $isEditing = false;
     public $showModal = false;
     public $showConfirmModal = false;
-    public $sucursales;
+    public $sucursales, $proveedores;
     public $productoIdToDelete;
 
     protected $rules = [
@@ -26,6 +27,7 @@ class ProductoTable extends Component
         'stock' => 'required|integer|min:0',
         'categoria' => 'required|string',
         'sucursal_id' => 'required|exists:sucursales,id',
+        'proveedor_id' => 'nullable|exists:proveedores,id', // Validación de proveedor_id
         'imagen' => 'nullable|image|max:1024',
     ];
 
@@ -33,6 +35,7 @@ class ProductoTable extends Component
     {
         $this->productos = Productos::all();
         $this->sucursales = Sucursales::all();
+        $this->proveedores = Proveedores::all();
     }
 
     public function openModal()
@@ -79,6 +82,7 @@ class ProductoTable extends Component
             'stock' => $this->stock,
             'categoria' => $this->categoria,
             'sucursal_id' => $this->sucursal_id,
+            'proveedor_id' => $this->proveedor_id,
             'imagen' => $imagenPath,
         ]);
 
@@ -102,6 +106,7 @@ class ProductoTable extends Component
             'stock' => $this->stock,
             'categoria' => $this->categoria,
             'sucursal_id' => $this->sucursal_id,
+            'proveedor_id' => $this->proveedor_id,
             'imagen' => $imagenPath,
         ]);
 
@@ -109,7 +114,6 @@ class ProductoTable extends Component
         $this->closeModal();
         $this->productos = Productos::all();
     }
-
 
     public function closeModal()
     {
@@ -126,6 +130,7 @@ class ProductoTable extends Component
         $this->stock = '';
         $this->categoria = '';
         $this->sucursal_id = '';
+        $this->proveedor_id = '';
         $this->imagen = null;
         $this->imagenActual = null;
     }

@@ -15,17 +15,18 @@ return new class extends Migration
         $table->id();
         $table->string('nombre');
         $table->string('descripcion')->nullable();
-        $table->decimal('precio_c', 6, 2)->nullable(); // Precio de compra nulleable
-        $table->decimal('precio_v', 6, 2)->nullable(); // Precio de venta nulleable
+        $table->decimal('precio_c', 6, 2)->nullable();
+        $table->decimal('precio_v', 6, 2)->nullable();
         $table->tinyInteger('prod_estado')->unsigned()->default(1);
         $table->integer('stock')->unsigned()->default(0);
-        $table->string('categoria')->nullable(); // Categoría del producto
-
+        $table->string('categoria')->nullable();
         $table->foreignId('sucursal_id')->constrained('sucursales');
         $table->foreignId('cocinero_id')->nullable()->constrained('users');
+        $table->foreignId('proveedor_id')->nullable()->constrained('proveedores');
 
         $table->timestamps();
     });
+
 }
 
 
