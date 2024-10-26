@@ -15,11 +15,16 @@ class RolesTable extends Component
 {
     public $roles, $users, $verPermissions, $permissions, $allRoles;
     public $roleName, $userName, $userEmail, $userPassword;
+    public $roleIdToDelete, $userIdToDelete;
 
     // Control de modales
     public $showModalRole = false;
     public $showModalUser = false;
     public $showModalPermissions = false;
+    public $showModalCR = false;
+    public $showConfirmModalCR = false;
+    public $showModalCU = false;
+    public $showConfirmModalCU = false;
 
     public $isEditingRole = false;
     public $isEditingUser = false;
@@ -112,8 +117,15 @@ class RolesTable extends Component
         session()->flash('message', 'Rol actualizado con éxito.');
     }
 
-    public function deleteRole($id){
-        Role::findOrFail($id)->delete();
+    public function confirmDeleteR($id)
+    {
+        $this->roleIdToDelete = $id;
+        $this->showConfirmModalCR = true;
+    }
+
+    public function deleteRole(){
+        Role::findOrFail($this->roleIdToDelete)->delete();
+        $this->showConfirmModalCR = false;
         session()->flash('message', 'Rol eliminado con éxito.');
     }
 
@@ -138,10 +150,12 @@ class RolesTable extends Component
     }
 
     public function editUser($id){
-        $user = User::findOrFail($id);
+        //$user = User::findOrFail($id);
+        $user = User::with('roles')->find($id); // reemplaza $userId con el ID del usuario que deseas obtener
         $this->userId = $id;
         $this->userName = $user->name;
         $this->userEmail = $user->email;
+        $this->userSucursal = $user->sucursales->first()->id;
         $this->selectedRoles = $user->roles->pluck('id')->toArray();
         $this->isEditingUser = true;
         $this->showModalUser = true;
@@ -198,10 +212,16 @@ class RolesTable extends Component
         session()->flash('message', 'Usuario agregado con éxito y asociado a la sucursal.');
     }
 
+    public function confirmDeleteU($id)
+    {
+        $this->userIdToDelete = $id;
+        $this->showConfirmModalCU = true;
+    }
 
-    public function deleteUser($id){
-        User::findOrFail($id)->delete();
-        session()->flash('message', 'Usuario eliminado con éxito.');
+    public function deleteUser(){
+        Role::findOrFail($this->userIdToDelete)->delete();
+        $this->showConfirmModalCU = false;
+        session()->flash('message', 'Rol eliminado con éxito.');
     }
 
     // Permisos

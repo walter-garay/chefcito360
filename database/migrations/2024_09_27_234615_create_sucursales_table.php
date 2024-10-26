@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('whatsapp')->nullable();
             $table->string('serie');
             $table->tinyInteger('suc_estado')->unsigned()->default(1);
-            $table->unsignedBigInteger('gerente_id');
-            $table->foreign('gerente_id')->references('id')->on('users');
+            //$table->unsignedBigInteger('gerente_id');
+            //$table->foreign('gerente_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@
     <x-slot name="content">
         <section>
             <p class="font-medium">¿Estás seguro de que deseas eliminar la sucursal <b
-                    class="text-red-800 font-bold">{{ $sucursal->nombre }}</b>?</p>
+                    class="font-bold text-red-800">{{ $sucursal->nombre }}</b>?</p>
         </section>
     </x-slot>
     <x-slot name="footer">

@@ -15,35 +15,41 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @role('ADMINISTRADOR')
+                    @can('Roles')
                     <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
                         {{ __('Roles') }}
                     </x-nav-link>
-                    @endrole
-
+                    @endcan
+                    @can('Platillos ver')
                     <x-nav-link href="{{ route('platillos.index') }}" :active="request()->routeIs('platillos.index')">
                         {{ __('Platillos') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Proveedores ver')
                     <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
                         {{ __('Proveedores') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Inventario ver')
                     <x-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
                         {{ __('Inventario') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Sucursales ver')
                     <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
                         {{ __('Sucursales') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Mesas ver')
                     <x-nav-link href="{{ route('mesas.index') }}" :active="request()->routeIs('mesas.index')">
                         {{ __('Mesas') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Ordenes ver')
                     <x-nav-link href="{{ route('ordenes.index') }}" :active="request()->routeIs('ordenes.index')">
                         {{ __('Ordenes') }}
                     </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
