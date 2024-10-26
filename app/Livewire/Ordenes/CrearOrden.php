@@ -16,9 +16,11 @@ class CrearOrden extends Component
     public $mesa_id;
     public $mesero_id;
     public $platillos = []; 
-    
     public $todosPlatillos =[];
     public $mesas; 
+    public $estado;
+    public $estados = ['Pedido', 'Servido', 'Cancelado', 'Pagado']; 
+
 
     protected $rules = [
         'numero' => ['required', 'string', 'max:100'],
@@ -33,7 +35,8 @@ class CrearOrden extends Component
     {
         $this->reset();
         $this->todosPlatillos = Platillo::all(); // Carga todos los platillos
-        $this->mesas = Mesa::all(); // Carga todas las mesas
+        $this->mesas = $this->obtenerMesasDisponibles(); // Carga las mesas disponibles
+        $this->estado = 'Pedido';
     }
     
 
@@ -42,9 +45,17 @@ class CrearOrden extends Component
         $this->resetValidation();
         $this->reset();
         $this->mesero_id = Auth::id(); 
-        $this->mesas = Mesa::all();
+        $this->mesas = $this->obtenerMesasDisponibles();
         $this->showModal = true;
     }
+
+    private function obtenerMesasDisponibles()
+    {
+        return Mesa::whereDoesntHave('ordenes', function($query) {
+            $query->whereIn('estado', ['Pagado', 'Cancelado']);
+        })->get();
+    }
+
 
     public function agregarPlatillo()
     {
@@ -86,6 +97,7 @@ class CrearOrden extends Component
         $orden->total = $this->total;
         $orden->mesa_id = $this->mesa_id;
         $orden->mesero_id = $this->mesero_id;
+        $orden->estado = $this->estado;
         $orden->save();
 
         foreach ($this->platillos as $platillo) {
@@ -105,7 +117,7 @@ class CrearOrden extends Component
 
     public function render()
 {
-    $this->mesas = Mesa::select('id', 'numero')->get();
+    $this->mesas = $this->obtenerMesasDisponibles();
     $this->todosPlatillos = Platillo::all(); // Asegúrate de que esto esté en el render también
 
     return view('livewire.ordenes.crear-orden', [

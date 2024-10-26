@@ -10,6 +10,12 @@ class Mesa extends Model
     use HasFactory;
     public $timestamps = false;
 
+    public function ordenes()
+    {
+        return $this->hasMany(Ordenes::class);
+    }
+
+
 
     protected $fillable = [
         'numero',

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('mesa_id')->references('id')->on('mesas');
             $table->unsignedBigInteger('mesero_id');
             $table->foreign('mesero_id')->references('id')->on('users');
+            $table->enum('estado', ['Pedido', 'Servido', 'Cancelado', 'Pagado'])->default('Pedido');
             $table->timestamps();
         });
     }
