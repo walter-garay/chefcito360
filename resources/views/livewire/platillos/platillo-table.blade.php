@@ -1,12 +1,13 @@
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
-    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+<div class="mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
+    <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
         @if (session()->has('message'))
             <div class="mb-4 text-green-600">
                 {{ session('message') }}
             </div>
         @endif
 
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center justify-between mb-4">
+            <!-- Botón para abrir el modal de agregar platillo -->
             <x-button wire:click="openModal" class="mr-2 bg-blue-600 hover:bg-blue-700">
                 Agregar platillo
             </x-button>
@@ -73,7 +74,7 @@
         <x-slot name="content">
             <form>
                 <x-label for="nombre" value="Nombre del Platillo" />
-                <x-input id="nombre" type="text" wire:model="nombre" class="mt-1 block w-full" />
+                <x-input id="nombre" type="text" wire:model="nombre" class="block w-full mt-1" />
                 <x-input-error for="nombre" />
 
                 <x-label for="descripcion" value="Descripción / Ingredientes" class="mt-4" />
@@ -81,22 +82,22 @@
                 <x-input-error for="descripcion" />
 
                 <x-label for="precio" value="Precio" class="mt-4" />
-                <x-input id="precio" type="number" step="0.01" wire:model="precio" class="mt-1 block w-full" />
+                <x-input id="precio" type="number" step="0.01" wire:model="precio" class="block w-full mt-1" />
                 <x-input-error for="precio" />
 
                 <x-label for="imagen" value="Foto del Platillo" class="mt-4" />
-                <input type="file" wire:model="imagen" id="imagen" class="mt-1 block w-full">
+                <input type="file" wire:model="imagen" id="imagen" class="block w-full mt-1">
                 <x-input-error for="imagen" />
                 @if ($imagen && is_object($imagen))
                     <img src="{{ $imagen->temporaryUrl() }}" alt="Vista previa" class="mt-2 w-16 h-16 rounded">
                 @elseif ($isEditing && $imagenActual)
-                    <img src="{{ asset('storage/' . $imagenActual) }}" alt="Imagen actual" class="mt-2 w-16 h-16 rounded">
+                    <img src="{{ asset('storage/' . $imagenActual) }}" alt="Imagen actual" class="w-16 h-16 mt-2 rounded">
                 @endif
 
                 <x-label for="categoria" value="Categoría" class="mt-4" />
                 <x-dropdown width="full" wire:model="categoria" dropdownClasses="mt-2">
                     <x-slot name="trigger">
-                        <x-input id="categoria_input" type="text" wire:model="categoria" readonly class="cursor-pointer mt-1 block w-full" placeholder="Seleccione una categoría" />
+                        <x-input id="categoria_input" type="text" wire:model="categoria" readonly class="block w-full mt-1 cursor-pointer" placeholder="Seleccione una categoría" />
                     </x-slot>
                     <x-slot name="content">
                         <x-dropdown-link wire:click="$set('categoria', 'principal')">Principal</x-dropdown-link>

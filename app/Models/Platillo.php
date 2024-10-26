@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Platillo extends Model
 {
     use HasFactory;
@@ -26,6 +27,12 @@ class Platillo extends Model
     public function sucursal()
     {
         return $this->belongsTo(Sucursales::class, 'sucursal_id');
+    }
+
+    public function ordenes()
+    {
+        return $this->belongsToMany(Ordenes::class, 'platillos_ordenes', 'platillo_id', 'orden_id')
+                    ->withPivot('cantidad');
     }
 
 }

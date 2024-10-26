@@ -2,21 +2,29 @@
 
 namespace App\Livewire\Role;
 
+use App\Models\Sucursales;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
+
 class RolesTable extends Component
 {
     public $roles, $users, $verPermissions, $permissions, $allRoles;
     public $roleName, $userName, $userEmail, $userPassword;
+    public $roleIdToDelete, $userIdToDelete;
 
     // Control de modales
     public $showModalRole = false;
     public $showModalUser = false;
     public $showModalPermissions = false;
+    public $showModalCR = false;
+    public $showConfirmModalCR = false;
+    public $showModalCU = false;
+    public $showConfirmModalCU = false;
 
     public $isEditingRole = false;
     public $isEditingUser = false;
@@ -25,6 +33,9 @@ class RolesTable extends Component
 
     public $selectedPermissions = [], $selectedRoles = [];
 
+    public $sucursales;
+    public $userSucursal;
+
     public function render(){
         $this->roles = Role::all();
         $this->users = User::all();
@@ -32,7 +43,7 @@ class RolesTable extends Component
             $this->permissions = Permission::all();
         }
         $this->allRoles = Role::all();
-
+        $this->sucursales = Sucursales::all();
         return view('livewire.role.roles-table');
     }
 
@@ -106,8 +117,15 @@ class RolesTable extends Component
         session()->flash('message', 'Rol actualizado con éxito.');
     }
 
-    public function deleteRole($id){
-        Role::findOrFail($id)->delete();
+    public function confirmDeleteR($id)
+    {
+        $this->roleIdToDelete = $id;
+        $this->showConfirmModalCR = true;
+    }
+
+    public function deleteRole(){
+        Role::findOrFail($this->roleIdToDelete)->delete();
+        $this->showConfirmModalCR = false;
         session()->flash('message', 'Rol eliminado con éxito.');
     }
 
@@ -132,10 +150,12 @@ class RolesTable extends Component
     }
 
     public function editUser($id){
-        $user = User::findOrFail($id);
+        //$user = User::findOrFail($id);
+        $user = User::with('roles')->find($id); // reemplaza $userId con el ID del usuario que deseas obtener
         $this->userId = $id;
         $this->userName = $user->name;
         $this->userEmail = $user->email;
+        $this->userSucursal = $user->sucursales->first()->id;
         $this->selectedRoles = $user->roles->pluck('id')->toArray();
         $this->isEditingUser = true;
         $this->showModalUser = true;
@@ -160,29 +180,48 @@ class RolesTable extends Component
         session()->flash('message', 'Usuario actualizado con éxito.');
     }
 
-    public function storeUser(){
+    public function storeUser() {
         $this->validate([
             'userName' => 'required|string|max:255',
             'userEmail' => 'required|email|max:255|unique:users,email',
             'userPassword' => 'required|string|min:6',
+            'userSucursal' => 'required|exists:sucursales,id', // Validar que la sucursal existe
         ]);
 
+        // Crear el usuario
         $user = User::create([
             'name' => $this->userName,
             'email' => $this->userEmail,
             'password' => Hash::make($this->userPassword),
         ]);
 
+        // Asignar roles
         $roles = Role::whereIn('id', $this->selectedRoles)->pluck('name')->toArray();
         $user->syncRoles($roles);
 
+        // Enlazar el usuario con la sucursal en la tabla 'user_sucursal'
+        DB::table('user_sucursal')->insert([
+            'empleado_id' => $user->id, // ID del usuario recién creado
+            'sucursal_id' => $this->userSucursal, // ID de la sucursal seleccionada
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Cerrar modal o realizar acciones posteriores
         $this->closeUserModal();
-        session()->flash('message', 'Usuario agregado con éxito.');
+        session()->flash('message', 'Usuario agregado con éxito y asociado a la sucursal.');
     }
 
-    public function deleteUser($id){
-        User::findOrFail($id)->delete();
-        session()->flash('message', 'Usuario eliminado con éxito.');
+    public function confirmDeleteU($id)
+    {
+        $this->userIdToDelete = $id;
+        $this->showConfirmModalCU = true;
+    }
+
+    public function deleteUser(){
+        Role::findOrFail($this->userIdToDelete)->delete();
+        $this->showConfirmModalCU = false;
+        session()->flash('message', 'Rol eliminado con éxito.');
     }
 
     // Permisos

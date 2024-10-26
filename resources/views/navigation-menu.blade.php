@@ -15,18 +15,12 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @role('ADMINISTRADOR')
+                    @can('Roles')
                     <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
                         {{ __('Roles') }}
                     </x-nav-link>
-                    @endrole
-
-                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
-                        {{ __('Sucursales') }}
-                    </x-nav-link>
-
-                    @role('ADMINISTRADOR')
-                    <!-- Select simulado como nav-link -->
+                    @endcan
+                    @can('Platillos ver')
                     <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
                         <select id="inventario" onchange="window.location.href=this.value" class="text-gray-500 text-sm font-medium bg-transparent border-none focus:outline-none cursor-pointer appearance-none">
                             <option selected disabled>{{ __('Inventario') }}</option>
@@ -39,20 +33,32 @@
                         </select>
 
                     </x-nav-link>
-                    @endrole
-
-
+                    @endcan
+                    @can('Proveedores ver')
                     <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
                         {{ __('Proveedores') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Inventario ver')
+                    <x-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
+                        {{ __('Inventario') }}
+                    </x-nav-link>
+                    @endcan
+                    @can('Sucursales ver')
+                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
+                        {{ __('Sucursales') }}
+                    </x-nav-link>
+                    @endcan
+                    @can('Mesas ver')
                     <x-nav-link href="{{ route('mesas.index') }}" :active="request()->routeIs('mesas.index')">
                         {{ __('Mesas') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('Mesas ver')
                     <x-nav-link href="{{ route('ordenes.index') }}" :active="request()->routeIs('ordenes.index')">
                         {{ __('Ordenes') }}
                     </x-nav-link>
+                    @endcan
                 </div>
 
             </div>

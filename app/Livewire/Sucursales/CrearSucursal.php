@@ -16,7 +16,7 @@ class CrearSucursal extends Component
     public $direccion;
     public $whatsapp;
     public $serie;
-    public $gerente_id;
+    //public $gerente_id;
 
     protected $rules = [
         'nombre' => ['required','string','max:250'],
@@ -42,7 +42,7 @@ class CrearSucursal extends Component
         $sucursal->direccion = $this->direccion;
         $sucursal->whatsapp = $this->whatsapp;
         $sucursal->serie = $this->serie;
-        $sucursal->gerente_id = Auth::id();
+        //$sucursal->gerente_id = Auth::id();
         $sucursal->save();
 
         $this->dispatch('guardado');

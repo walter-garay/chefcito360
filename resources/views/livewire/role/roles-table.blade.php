@@ -34,8 +34,10 @@
                                 <td class="px-6 py-4">
                                     <x-button wire:click="editUser({{ $user->id }})"
                                         class="mr-2 bg-blue-500">Editar</x-button>
-                                    <x-button wire:click="deleteUser({{ $user->id }})"
-                                        class="bg-red-500">Eliminar</x-button>
+                                    <!-- Botón Eliminar -->
+                                    <x-danger-button wire:click="confirmDeleteU({{ $user->id }})">
+                                        Eliminar
+                                    </x-danger-button>
                                 </td>
                             </tr>
                         @endforeach
@@ -62,8 +64,10 @@
                                 <td class="px-6 py-4">
                                     <x-button wire:click="editRole({{ $role->id }})"
                                         class="mr-2 bg-blue-500">Editar</x-button>
-                                    <x-button wire:click="deleteRole({{ $role->id }})"
-                                        class="bg-red-500">Eliminar</x-button>
+                                    <!-- Botón Eliminar -->
+                                    <x-danger-button wire:click="confirmDeleteR({{ $role->id }})">
+                                        Eliminar
+                                    </x-danger-button>
                                     <x-button wire:click="showPermissions({{ $role->id }})"
                                         class="bg-green-500">Mostrar Permisos</x-button>
                                 </td>
@@ -142,7 +146,7 @@
                 <!-- Sucursal -->
                 <x-label for="sucursal" value="Sucursal" class="mt-4" />
                 <x-select id="sucursal" wire:model="userSucursal" class="block w-full mt-1">
-                    <option value="">Seleccione una sucursal</option>
+                    <option value="null">Seleccione una sucursal</option>
                     @foreach ($sucursales as $sucursal)
                         <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
                     @endforeach
@@ -186,4 +190,44 @@
             <x-secondary-button wire:click="closePermissionsModal">Cerrar</x-secondary-button>
         </x-slot>
     </x-dialog-modal>
+
+    <x-confirmation-modal wire:model="showConfirmModalCR">
+        <x-slot name="title">
+            ¿Estás seguro de esta acción?
+        </x-slot>
+
+        <x-slot name="content">
+            El Rol será eliminado permanentemente.
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('showConfirmModalCR')">
+                Cancelar
+            </x-secondary-button>
+
+            <x-danger-button wire:click="deleteRole" class="ml-2">
+                Eliminar
+            </x-danger-button>
+        </x-slot>
+    </x-confirmation-modal>
+
+    <x-confirmation-modal wire:model="showConfirmModalCU">
+        <x-slot name="title">
+            ¿Estás seguro de esta acción?
+        </x-slot>
+
+        <x-slot name="content">
+            El Usuario será eliminado permanentemente.
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('showConfirmModalCU')">
+                Cancelar
+            </x-secondary-button>
+
+            <x-danger-button wire:click="deleteUser" class="ml-2">
+                Eliminar
+            </x-danger-button>
+        </x-slot>
+    </x-confirmation-modal>
 </div>

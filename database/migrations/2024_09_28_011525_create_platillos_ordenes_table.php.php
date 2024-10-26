@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('platillo_id')->references('id')->on('platillos');
             $table->unsignedBigInteger('orden_id');
             $table->foreign('orden_id')->references('id')->on('ordenes');
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

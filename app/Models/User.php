@@ -64,4 +64,12 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function sucursales()
+    {
+        return $this->belongsToMany(Sucursales::class, 'user_sucursal', 'empleado_id', 'sucursal_id');
+    }
+
+    
+
 }

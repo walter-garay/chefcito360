@@ -14,6 +14,7 @@ class ListarOrden extends Component
         'guardado' => 'getOrdenes',
         'ordenActualizada' => 'getOrdenes',
         'ordenEliminada' => 'getOrdenes',
+        'cerrarModal' => 'getOrdenes',
     ];
 
     public function mount()
@@ -40,6 +41,7 @@ class ListarOrden extends Component
         $this->dispatch('editar', $id);
     }
 
+    
 
     public function render()
     {
