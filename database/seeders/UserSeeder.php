@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ])->assignRole('COCINERO');
 
-        
+
         DB::table('user_sucursal')->insert([
             'empleado_id' => 1,
             'sucursal_id' => 1,

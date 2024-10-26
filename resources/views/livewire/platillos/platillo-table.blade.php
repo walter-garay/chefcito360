@@ -29,37 +29,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if($platillos->count() > 0)
-                        @foreach ($platillos as $platillo)
-                            <tr class="bg-white border-b">
-                                <td scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{{ $platillo->id }}</td>
-                                <td scope="row" class="px-6 py-4 whitespace-nowrap">
-                                    @if ($platillo->imagen)
-                                        <img src="{{ asset('storage/' . $platillo->imagen) }}" alt="Foto del platillo" class="w-16 h-16 rounded">
-                                    @else
-                                        <span>No hay imagen</span>
-                                    @endif
-                                </td>
-                                <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $platillo->nombre }}</td>
-                                <td scope="row" class="px-6 py-4 whitespace-nowrap">S/. {{ number_format($platillo->precio, 2) }}</td>
-                                <td scope="row" class="px-6 py-4 capitalize whitespace-nowrap">{{ $platillo->categoria }}</td>
-                                <td scope="row" class="px-6 py-4 capitalize whitespace-nowrap">{{ $platillo->estado }}</td>
-                                <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ $platillo->sucursal->nombre }}</td>
-                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                    <x-icon class="px-2 h-7 bg-violet-900" wire:click="editPlatillo({{ $platillo->id }})">
-                                        <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
-                                    </x-icon>
-                                    <x-icon class="px-2 h-7 bg-red-800" wire:click="confirmDelete({{ $platillo->id }})">
-                                        <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
-                                    </x-icon>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
+                    @foreach ($platillos as $platillo)
                         <tr>
-                            <td class="px-6 py-4 text-center" colspan="10">No se ha registrado ningún platillo</td>
+                            <td class="px-6 py-4">{{ $platillo->id }}</td>
+                            <td class="px-6 py-4">
+                                @if ($platillo->imagen)
+                                    <img src="{{ asset('storage/' . $platillo->imagen) }}" alt="Foto del platillo" class="w-16 h-16 rounded">
+                                @else
+                                    <span>No hay imagen</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">{{ $platillo->nombre }}</td>
+                            <td class="px-6 py-4">{{ $platillo->descripcion }}</td>
+                            <td class="px-6 py-4">S/. {{ number_format($platillo->precio, 2) }}</td>
+                            <td class="px-6 py-4 capitalize">{{ $platillo->categoria }}</td>
+                            <td class="px-6 py-4">{{ $platillo->sucursal->nombre }}</td>
+                            <td class="px-6 py-4">
+                                <!-- Botón Editar -->
+                                <x-button wire:click="editPlatillo({{ $platillo->id }})">
+                                    Editar
+                                </x-button>
+
+                                <!-- Botón Eliminar -->
+                                <x-danger-button wire:click="confirmDelete({{ $platillo->id }})">
+                                    Eliminar
+                                </x-danger-button>
+                            </td>
                         </tr>
-                    @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -108,23 +105,7 @@
                 </x-dropdown>
                 <x-input-error for="categoria" />
 
-                <x-label for="estado" value="Estado" class="mt-4" />
-                <x-dropdown width="full" wire:model="estado" dropdownClasses="mt-2">
-                    <x-slot name="trigger">
-                        <x-input id="estado_input" type="text" wire:model="estado" readonly class="cursor-pointer mt-1 block w-full" placeholder="Seleccione el estado" />
-                    </x-slot>
-                    <x-slot name="content">
-                        <x-dropdown-link wire:click="$set('estado', 'Disponible')">Disponible</x-dropdown-link>
-                        <x-dropdown-link wire:click="$set('estado', 'No disponible')">No disponible</x-dropdown-link>
-                    </x-slot>
-                </x-dropdown>
-
-                <x-input-error for="estado" />
-
-                <x-label for="comentario" value="Comentario" class="mt-4" />
-                <textarea id="comentario" wire:model="comentario" class="mt-1 block w-full" rows="3"></textarea>
-                <x-input-error for="comentario" />
-
+                <!-- Sucursal usando dropdown -->
                 <x-label for="sucursal_id" value="Sucursal" class="mt-4" />
                 <x-dropdown width="full" wire:model.defer="sucursal_id" dropdownClasses="mt-2">
                     <x-slot name="trigger">

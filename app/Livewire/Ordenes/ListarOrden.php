@@ -17,10 +17,6 @@ class ListarOrden extends Component
         'cerrarModal' => 'getOrdenes',
     ];
 
-    public function mount()
-    {
-        $this->getOrdenes();
-    }
 
     public function getOrdenes()
     {
@@ -45,6 +41,8 @@ class ListarOrden extends Component
 
     public function render()
     {
+        $this->getOrdenes();
+
         return view('livewire.ordenes.listar-orden', [
             'ordenes' => $this->ordenes,
 
