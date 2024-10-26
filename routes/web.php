@@ -37,7 +37,7 @@ Route::resource('roles', RoleController::class)->middleware(['auth', 'can:Roles'
 // Rutas para permisos
 Route::resource('permisos', PermisosController::class)->middleware(['auth', 'can:Ver Permisos', 'can:Asignar Permisos'])->names('permisos');
 
-// Rutas para empleados 
+// Rutas para empleados
 Route::resource('empleados', EmpleadoController::class)->middleware(['auth'])->names('empleados');
 
 // Rutas para la gestión de platillos
@@ -48,3 +48,4 @@ Route::resource('sucursales', SucursalesController::class)->middleware(['auth'])
 Route::resource('mesas', MesaController::class)->middleware(['auth'])->names('mesas');
 Route::resource('ventas', VentasController::class)->middleware(['auth'])->names('ventas');
 Route::resource('ordenes', OrdenesController::class)->middleware(['auth'])->names('ordenes');
+

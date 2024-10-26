@@ -6,6 +6,7 @@ use App\Models\Productos;
 use Illuminate\Http\Request;
 use App\Models\Sucursales;
 
+
 class ProductosController extends Controller
 {
     /**
@@ -21,6 +22,8 @@ class ProductosController extends Controller
         // Pasar los datos a la vista
         return view('productos.index', compact('productos', 'sucursales'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -25,6 +25,7 @@
                         {{ __('Sucursales') }}
                     </x-nav-link>
 
+                    @role('ADMINISTRADOR')
                     <!-- Select simulado como nav-link -->
                     <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
                         <select id="inventario" onchange="window.location.href=this.value" class="text-gray-500 text-sm font-medium bg-transparent border-none focus:outline-none cursor-pointer appearance-none">
@@ -36,8 +37,10 @@
                                 {{ __('Productos') }}
                             </option>
                         </select>
-                    
+
                     </x-nav-link>
+                    @endrole
+
 
                     <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
                         {{ __('Proveedores') }}

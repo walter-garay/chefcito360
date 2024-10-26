@@ -4,20 +4,29 @@ namespace App\Livewire\Productos;
 
 use App\Models\Productos;
 use App\Models\Sucursales;
-use App\Models\Proveedores; 
+use App\Models\Proveedores;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Exports\ProductosExport;
+use App\Imports\ProductosImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ProductoTable extends Component
 {
     use WithFileUploads;
 
-    public $producto_id, $productos, $nombre, $descripcion, $precio_c, $precio_v, $stock, $categoria, $sucursal_id, $proveedor_id, $imagen, $imagenActual;
+    public $producto_id, $productos, $nombre, $descripcion, $precio_c, $precio_v, $stock, $categoria, $sucursal_id, $proveedor_id, $imagen, $imagenActual, $fecha_ingreso;
+
     public $isEditing = false;
     public $showModal = false;
     public $showConfirmModal = false;
     public $sucursales, $proveedores;
     public $productoIdToDelete;
+    public $file; // Variable para almacenar el archivo de importación
+    public $categoriaSeleccionada = ''; // Propiedad para el filtro de categoría
+
+
 
     protected $rules = [
         'nombre' => 'required|string|max:255',
@@ -36,6 +45,8 @@ class ProductoTable extends Component
         $this->productos = Productos::all();
         $this->sucursales = Sucursales::all();
         $this->proveedores = Proveedores::all();
+        $this->actualizarProductos();
+
     }
 
     public function openModal()
@@ -51,6 +62,7 @@ class ProductoTable extends Component
         $this->producto_id = $producto->id;
         $this->fill($producto->toArray());
         $this->imagenActual = $producto->imagen;
+        $this->fecha_ingreso = date('d/m/Y', strtotime($producto->created_at));
         $this->isEditing = true;
         $this->showModal = true;
     }
@@ -134,6 +146,39 @@ class ProductoTable extends Component
         $this->imagen = null;
         $this->imagenActual = null;
     }
+
+
+    public function updatedCategoriaSeleccionada()
+    {
+        $this->actualizarProductos();
+    }
+
+    public function actualizarProductos()
+    {
+        $this->productos = Productos::when($this->categoriaSeleccionada, function ($query) {
+            $query->where('categoria', $this->categoriaSeleccionada);
+        })->get();
+    }
+
+
+    public function exportar()
+    {
+        return Excel::download(new ProductosExport, 'productos.xlsx');
+    }
+
+    public function importar()
+    {
+        $this->validate([
+            'file' => 'required|file|mimes:xlsx,csv', // Validación del archivo
+        ]);
+
+        Excel::import(new ProductosImport, $this->file->path());
+
+        session()->flash('message', 'Productos importados exitosamente.');
+        $this->file = null; 
+        $this->productos = Productos::all();
+    }
+
 
     public function render()
     {

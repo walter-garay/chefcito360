@@ -7,9 +7,45 @@
         @endif
 
         <div class="flex justify-between items-center mb-4">
+
             <x-button wire:click="openModal" class="mr-2 bg-blue-600 hover:bg-blue-700">
                 Agregar Producto
             </x-button>
+
+            <div class="flex gap-x-2">
+                <!-- Select para filtrar por categoría -->
+                <div>
+                    <select wire:model="categoriaSeleccionada" class="px-3 py-1 border border-gray-300 rounded-md">
+                        <option value="">CategorÍas</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Alimentos">Alimentos</option>
+                        <option value="Utensilios">Utensilios</option>
+                    </select>
+                </div>
+
+                <x-button  wire:click="exportar" class="bg-green-600 hover:bg-green-700">
+                    Exportar
+                </x-button>
+
+                <!-- Formulario de Importación -->
+                <form wire:submit.prevent="importar" enctype="multipart/form-data" class="flex items-center gap-2">
+                    <!-- Input de archivo oculto -->
+                    <input type="file" wire:model="file" id="fileInput" class="hidden" />
+
+                    <!-- Botón de Importación -->
+                    <x-button type="submit" class="bg-purple-500 hover:bg-purple-600">
+                        Importar
+                    </x-button>
+
+                    <!-- Ícono para abrir el explorador de archivos -->
+                    <label for="fileInput" class="cursor-pointer">
+                        <div class="bg-violet-400 hover:bg-violet-500 flex items-center justify-center p-2 rounded">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </label>
+                </form>
+            </div>
+
         </div>
 
         <div class="overflow-x-auto">
@@ -106,10 +142,10 @@
                 <x-input-error for="sucursal_id" />
 
                 <!-- Fecha de ingreso -->
-                <x-label for="fecha_ingreso" value="Fecha de Ingreso" class="mt-4" />
-                <x-input id="fecha_ingreso" type="text" wire:model="fecha_ingreso" class="mt-1 block w-full" placeholder="Fecha de ingreso"
-                    {{ $isEditing ? 'readonly' : '' }} />
-                <x-input-error for="fecha_ingreso" />
+                @if ($isEditing)
+                    <x-label for="fecha_ingreso" value="Fecha de Ingreso" class="mt-4" />
+                    <x-input id="fecha_ingreso" type="text" wire:model="fecha_ingreso" class="mt-1 block w-full" readonly />
+                @endif
 
             </form>
         </x-slot>
