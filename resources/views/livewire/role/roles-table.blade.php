@@ -142,7 +142,7 @@
                 <!-- Sucursal -->
                 <x-label for="sucursal" value="Sucursal" class="mt-4" />
                 <x-select id="sucursal" wire:model="userSucursal" class="block w-full mt-1">
-                    <option value="">Seleccione una sucursal</option>
+                    <option value="null">Seleccione una sucursal</option>
                     @foreach ($sucursales as $sucursal)
                         <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
                     @endforeach

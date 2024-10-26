@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sucursales;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -18,7 +19,6 @@ class RoleController extends Controller
         // Obtener todos los platillos con su relación sucursal
         $roles = Role::all();
         $permisos = Permission::all();
-
         // Pasar los datos a la vista
         return view('roles.index', compact('roles', 'permisos'));
     }

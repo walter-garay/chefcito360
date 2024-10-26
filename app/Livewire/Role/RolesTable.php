@@ -2,11 +2,14 @@
 
 namespace App\Livewire\Role;
 
+use App\Models\Sucursales;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+
 
 class RolesTable extends Component
 {
@@ -25,6 +28,9 @@ class RolesTable extends Component
 
     public $selectedPermissions = [], $selectedRoles = [];
 
+    public $sucursales;
+    public $userSucursal;
+
     public function render(){
         $this->roles = Role::all();
         $this->users = User::all();
@@ -32,7 +38,7 @@ class RolesTable extends Component
             $this->permissions = Permission::all();
         }
         $this->allRoles = Role::all();
-
+        $this->sucursales = Sucursales::all();
         return view('livewire.role.roles-table');
     }
 
@@ -160,25 +166,38 @@ class RolesTable extends Component
         session()->flash('message', 'Usuario actualizado con éxito.');
     }
 
-    public function storeUser(){
+    public function storeUser() {
         $this->validate([
             'userName' => 'required|string|max:255',
             'userEmail' => 'required|email|max:255|unique:users,email',
             'userPassword' => 'required|string|min:6',
+            'userSucursal' => 'required|exists:sucursales,id', // Validar que la sucursal existe
         ]);
 
+        // Crear el usuario
         $user = User::create([
             'name' => $this->userName,
             'email' => $this->userEmail,
             'password' => Hash::make($this->userPassword),
         ]);
 
+        // Asignar roles
         $roles = Role::whereIn('id', $this->selectedRoles)->pluck('name')->toArray();
         $user->syncRoles($roles);
 
+        // Enlazar el usuario con la sucursal en la tabla 'user_sucursal'
+        DB::table('user_sucursal')->insert([
+            'empleado_id' => $user->id, // ID del usuario recién creado
+            'sucursal_id' => $this->userSucursal, // ID de la sucursal seleccionada
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Cerrar modal o realizar acciones posteriores
         $this->closeUserModal();
-        session()->flash('message', 'Usuario agregado con éxito.');
+        session()->flash('message', 'Usuario agregado con éxito y asociado a la sucursal.');
     }
+
 
     public function deleteUser($id){
         User::findOrFail($id)->delete();
