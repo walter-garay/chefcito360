@@ -11,88 +11,67 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                     @can('Roles')
-                    <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
-                        {{ __('Roles') }}
-                    </x-nav-link>
+                        <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
+                            {{ __('Roles') }}
+                        </x-nav-link>
                     @endcan
-                    @can('Platillos ver')
-                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
-                        {{ __('Sucursales') }}
-                    </x-nav-link>
+
+                    @can('Sucursales ver')
+                        <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
+                            {{ __('Sucursales') }}
+                        </x-nav-link>
+                    @endcan
 
                     @role('ADMINISTRADOR')
-                    <!-- Select simulado como nav-link -->
-                    <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
-                        <select id="inventario" onchange="window.location.href=this.value" class="text-sm font-medium text-gray-500 bg-transparent border-none appearance-none cursor-pointer focus:outline-none">
-                            <option selected disabled>{{ __('Inventario') }}</option>
-                            <option value="{{ route('platillos.index') }}" {{ request()->routeIs('platillos.index') ? 'selected' : '' }}>
-                                {{ __('Platillos') }}
-                            </option>
-                            <option value="{{ route('productos.index') }}" {{ request()->routeIs('productos.index') ? 'selected' : '' }}>
-                                {{ __('Productos') }}
-                            </option>
-                        </select>
-
-                    <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
-                        <select id="inventario" onchange="window.location.href=this.value" class="text-gray-500 text-sm font-medium bg-transparent border-none focus:outline-none cursor-pointer appearance-none">
-                            <option selected disabled>{{ __('Inventario') }}</option>
-                            <option value="{{ route('platillos.index') }}" {{ request()->routeIs('platillos.index') ? 'selected' : '' }}>
-                                {{ __('Platillos') }}
-                            </option>
-                            <option value="{{ route('productos.index') }}" {{ request()->routeIs('productos.index') ? 'selected' : '' }}>
-                                {{ __('Productos') }}
-                            </option>
-                        </select>
-
-                    </x-nav-link>
+                        <x-nav-link :active="request()->routeIs('platillos.index') || request()->routeIs('productos.index')" class="relative">
+                            <select id="inventario" onchange="window.location.href=this.value" class="text-gray-500 text-sm font-medium bg-transparent border-none focus:outline-none cursor-pointer appearance-none">
+                                <option selected disabled>{{ __('Inventario') }}</option>
+                                <option value="{{ route('platillos.index') }}" {{ request()->routeIs('platillos.index') ? 'selected' : '' }}>
+                                    {{ __('Platillos') }}
+                                </option>
+                                <option value="{{ route('productos.index') }}" {{ request()->routeIs('productos.index') ? 'selected' : '' }}>
+                                    {{ __('Productos') }}
+                                </option>
+                            </select>
+                        </x-nav-link>
                     @endrole
 
-                    @endcan
                     @can('Proveedores ver')
-                    <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
-                        {{ __('Proveedores') }}
-                    </x-nav-link>
+                        <x-nav-link href="{{ route('proveedores.index') }}" :active="request()->routeIs('proveedores.index')">
+                            {{ __('Proveedores') }}
+                        </x-nav-link>
                     @endcan
-                    @can('Inventario ver')
-                    <x-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
-                        {{ __('Inventario') }}
-                    </x-nav-link>
-                    @endcan
-                    @can('Sucursales ver')
-                    <x-nav-link href="{{ route('sucursales.index') }}" :active="request()->routeIs('sucursales.index')">
-                        {{ __('Sucursales') }}
-                    </x-nav-link>
-                    @endcan
+
                     @can('Mesas ver')
-                    <x-nav-link href="{{ route('mesas.index') }}" :active="request()->routeIs('mesas.index')">
-                        {{ __('Mesas') }}
-                    </x-nav-link>
+                        <x-nav-link href="{{ route('mesas.index') }}" :active="request()->routeIs('mesas.index')">
+                            {{ __('Mesas') }}
+                        </x-nav-link>
                     @endcan
-                    @can('Mesas ver')
-                    <x-nav-link href="{{ route('ordenes.index') }}" :active="request()->routeIs('ordenes.index')">
-                        {{ __('Ordenes') }}
-                    </x-nav-link>
+
+                    @can('Ordenes ver')
+                        <x-nav-link href="{{ route('ordenes.index') }}" :active="request()->routeIs('ordenes.index')">
+                            {{ __('Ordenes') }}
+                        </x-nav-link>
                     @endcan
                 </div>
-
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="relative ms-3">
+                    <div class="relative ml-3">
                         <x-dropdown align="right" width="60">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-gray-50">
                                         {{ Auth::user()->currentTeam->name }}
-
-                                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                         </svg>
                                     </button>
@@ -120,7 +99,6 @@
                                     <!-- Team Switcher -->
                                     @if (Auth::user()->allTeams()->count() > 1)
                                         <div class="border-t border-gray-200"></div>
-
                                         <div class="block px-4 py-2 text-xs text-gray-400">
                                             {{ __('Switch Teams') }}
                                         </div>
@@ -136,7 +114,7 @@
                 @endif
 
                 <!-- Settings Dropdown -->
-                <div class="relative ms-3">
+                <div class="relative ml-3">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -145,10 +123,9 @@
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-gray-50">
                                         {{ Auth::user()->name }}
-
-                                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     </button>
@@ -177,9 +154,7 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
-
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
+                                <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
@@ -189,8 +164,8 @@
             </div>
 
             <!-- Hamburger -->
-            <div class="flex items-center -me-2 sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+            <div class="flex items-center -mr-2 sm:hidden">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none">
                     <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -212,7 +187,7 @@
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div class="shrink-0 me-3">
+                    <div class="shrink-0 mr-3">
                         <img class="object-cover w-10 h-10 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                     </div>
                 @endif
@@ -238,9 +213,7 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf
-
-                    <x-responsive-nav-link href="{{ route('logout') }}"
-                                   @click.prevent="$root.submit();">
+                    <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
@@ -253,7 +226,6 @@
                         {{ __('Manage Team') }}
                     </div>
 
-                    <!-- Team Settings -->
                     <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
                         {{ __('Team Settings') }}
                     </x-responsive-nav-link>
@@ -264,14 +236,11 @@
                         </x-responsive-nav-link>
                     @endcan
 
-                    <!-- Team Switcher -->
                     @if (Auth::user()->allTeams()->count() > 1)
                         <div class="border-t border-gray-200"></div>
-
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             {{ __('Switch Teams') }}
                         </div>
-
                         @foreach (Auth::user()->allTeams() as $team)
                             <x-switchable-team :team="$team" component="responsive-nav-link" />
                         @endforeach

@@ -40,20 +40,20 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">{{ $platillo->nombre }}</td>
-                            <td class="px-6 py-4">{{ $platillo->descripcion }}</td>
                             <td class="px-6 py-4">S/. {{ number_format($platillo->precio, 2) }}</td>
                             <td class="px-6 py-4 capitalize">{{ $platillo->categoria }}</td>
+                            <td class="px-6 py-4 capitalize">{{ $platillo->estado }}</td>
                             <td class="px-6 py-4">{{ $platillo->sucursal->nombre }}</td>
                             <td class="px-6 py-4">
                                 <!-- Botón Editar -->
-                                <x-button wire:click="editPlatillo({{ $platillo->id }})">
-                                    Editar
-                                </x-button>
+                                <x-icon wire:click="editPlatillo({{ $platillo->id }})" class="px-2 h-7 bg-violet-900" >
+                                    <i class="fa-sharp-duotone fa-solid fa-pencil"></i>
+                                </x-icon>
 
                                 <!-- Botón Eliminar -->
-                                <x-danger-button wire:click="confirmDelete({{ $platillo->id }})">
-                                    Eliminar
-                                </x-danger-button>
+                                <x-icon wire:click="confirmDelete({{ $platillo->id }})" class="px-2 h-7 bg-red-900" >
+                                    <i class="fa-sharp-duotone fa-solid fa-trash-can"></i>
+                                </x-icon>
                             </td>
                         </tr>
                     @endforeach
@@ -105,6 +105,19 @@
                 </x-dropdown>
                 <x-input-error for="categoria" />
 
+                <!-- Estado del Platillo -->
+                <x-label for="estado" value="Estado" class="mt-4" />
+                <x-dropdown width="full" wire:model="estado" dropdownClasses="mt-2">
+                    <x-slot name="trigger">
+                        <x-input id="estado_input" type="text" wire:model="estado" readonly class="block w-full mt-1 cursor-pointer" placeholder="Seleccione el estado" />
+                    </x-slot>
+                    <x-slot name="content">
+                        <x-dropdown-link wire:click="$set('estado', 'Disponible')">Disponible</x-dropdown-link>
+                        <x-dropdown-link wire:click="$set('estado', 'No disponible')">No disponible</x-dropdown-link>
+                    </x-slot>
+                </x-dropdown>
+                <x-input-error for="estado" />
+
                 <!-- Sucursal usando dropdown -->
                 <x-label for="sucursal_id" value="Sucursal" class="mt-4" />
                 <x-dropdown width="full" wire:model.defer="sucursal_id" dropdownClasses="mt-2">
@@ -133,6 +146,7 @@
             </x-button>
         </x-slot>
     </x-dialog-modal>
+
 
     <x-confirmation-modal wire:model="showConfirmModal">
         <x-slot name="title">
