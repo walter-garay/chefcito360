@@ -22,55 +22,55 @@ class UserSeeder extends Seeder
         ])->assignRole('ADMINISTRADOR');
 
         // Crear usuario GERENTE
-        User::create([
-            'name' => 'GERENTE',
-            'email' => 'gerente@chefcito.com',
-            'password' => bcrypt('123456789'),
-            'email_verified_at' => now(),
-        ])->assignRole('GERENTE');
+        // User::create([
+        //     'name' => 'GERENTE',
+        //     'email' => 'gerente@chefcito.com',
+        //     'password' => bcrypt('123456789'),
+        //     'email_verified_at' => now(),
+        // ])->assignRole('GERENTE');
 
-        // Crear usuario SUPER ADMINISTRADOR
-        User::create([
-            'name' => 'SUPER ADMINISTRADOR',
-            'email' => 'superadmin@chefcito.com',
-            'password' => bcrypt('123456789'),
-            'email_verified_at' => now(),
-        ])->assignRole('SUPER ADMINISTRADOR');
+        // // Crear usuario SUPER ADMINISTRADOR
+        // User::create([
+        //     'name' => 'SUPER ADMINISTRADOR',
+        //     'email' => 'superadmin@chefcito.com',
+        //     'password' => bcrypt('123456789'),
+        //     'email_verified_at' => now(),
+        // ])->assignRole('SUPER ADMINISTRADOR');
 
-        // Crear usuario CAJERO
-        User::create([
-            'name' => 'CAJERO',
-            'email' => 'cajero@chefcito.com',
-            'password' => bcrypt('123456789'),
-            'email_verified_at' => now(),
-        ])->assignRole('CAJERO');
+        // // Crear usuario CAJERO
+        // User::create([
+        //     'name' => 'CAJERO',
+        //     'email' => 'cajero@chefcito.com',
+        //     'password' => bcrypt('123456789'),
+        //     'email_verified_at' => now(),
+        // ])->assignRole('CAJERO');
 
-        // Crear usuario MESERO
-        User::create([
-            'name' => 'MESERO',
-            'email' => 'mesero@chefcito.com',
-            'password' => bcrypt('123456789'),
-            'email_verified_at' => now(),
-        ])->assignRole('MESERO');
+        // // Crear usuario MESERO
+        // User::create([
+        //     'name' => 'MESERO',
+        //     'email' => 'mesero@chefcito.com',
+        //     'password' => bcrypt('123456789'),
+        //     'email_verified_at' => now(),
+        // ])->assignRole('MESERO');
 
-        // Crear usuario COCINERO
-        User::create([
-            'name' => 'COCINERO',
-            'email' => 'cocinero@chefcito.com',
-            'password' => bcrypt('123456789'),
-            'email_verified_at' => now(),
-        ])->assignRole('COCINERO');
+        // // Crear usuario COCINERO
+        // User::create([
+        //     'name' => 'COCINERO',
+        //     'email' => 'cocinero@chefcito.com',
+        //     'password' => bcrypt('123456789'),
+        //     'email_verified_at' => now(),
+        // ])->assignRole('COCINERO');
 
 
-        DB::table('user_sucursal')->insert([
-            'empleado_id' => 1,
-            'sucursal_id' => 1,
-        ]);
+        // DB::table('user_sucursal')->insert([
+        //     'empleado_id' => 1,
+        //     'sucursal_id' => 1,
+        // ]);
 
-        DB::table('user_sucursal')->insert([
-            'empleado_id' => 2,
-            'sucursal_id' => 1,
-        ]);
+        // DB::table('user_sucursal')->insert([
+        //     'empleado_id' => 2,
+        //     'sucursal_id' => 1,
+        // ]);
 
     }
 }
