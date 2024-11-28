@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Productos;
+use App\Models\Proveedores;
 use Illuminate\Http\Request;
 use App\Models\Sucursales;
 
@@ -14,13 +15,14 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        // Obtener todos los productos con su relación sucursal
-        $productos = Productos::with('sucursal')->get();
+        // Obtener todos los productos con sus relaciones sucursal y proveedor
+        $productos = Productos::with(['sucursal', 'proveedor'])->get();
 
         $sucursales = Sucursales::all(); // Obtener todas las sucursales
+        $proveedores = Proveedores::all(); // Obtener todos los proveedores
 
         // Pasar los datos a la vista
-        return view('productos.index', compact('productos', 'sucursales'));
+        return view('productos.index', compact('productos', 'sucursales', 'proveedores'));
     }
 
 
