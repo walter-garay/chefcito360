@@ -8,6 +8,8 @@ use App\Models\Sucursales;
 
 class SucursalesSeeder extends Seeder
 {
+
+    
     /**
      * Run the database seeds.
      */

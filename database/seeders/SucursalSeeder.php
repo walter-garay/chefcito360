@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 
 class SucursalSeeder extends Seeder
 {
+
+
     /**
      * Run the database seeds.
      */
